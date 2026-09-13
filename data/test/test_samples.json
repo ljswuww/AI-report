@@ -1,0 +1,602 @@
+[
+  {
+    "text": "In the AEC_Q100_Rev_H_Base_Document, 'New test' is defined as qualification tests per Section 4.1, establishing the standard for new testing requirements in qualification scenarios."
+  },
+  {
+    "text": "In the AEC_Q100_Rev_H_Base_Document file, the supplier is obligated to meet user requirements for product or process change notifications as part of the requalification framework."
+  },
+  {
+    "text": "In the AEC_Q101_Rev_E_Base_Document file, sample sizes for qualification testing or generic data submission must align with Table 2's minimums and acceptance criteria; generic data should first be used to satisfy requirements before part-specific testing."
+  },
+  {
+    "text": "In the AEC_Q101_Rev_E_Base_Document file, the document references other standards, noting that tests A4A and A4Aalt are not executed on Cu wire bonded products, and instead, the requirements in AEC-Q006 must be followed, which also applies to parts being qualified with Cu wire."
+  },
+  {
+    "text": "In the AEC_Q101_Rev_E_Base_Document file, Revision E, dated March 1, 2021, was another complete revision that revised numerous sections including 1.2.2, 1.2.3, 1.2.4, 1.3.1, 1.3.3, 2.2, and sections 2.4 to 2.7."
+  },
+  {
+    "text": "AEC_Q101_Rev_E_Base_Document :\nTable 2: Qualification Test Methods, TEST GROUP A - ACCELERATED ENVIRONMENT STRESS TESTS, STRESS:Highly Accelerated Stress Test, ABV:HAST, #:A2, DATA TYPE:1, NOTES:D_G1U_V_3, SAMPLE SIZE /LOT:77, NUMBER OF LOTS:3 Note B, ACCEPT CRITERIA:0 Fails, TEST METHOD:JEDEC JESD22-A-110, ADDITIONAL REQUIREMENTS:96 hours at TA=130°C/85%RH, or 264hrs TA=110°C/85%RH with part reverse bias at 80% of rated voltage up to a voltage above which arcing in the chamber will likely occur (typically 42V). TEST before and after HAST."
+  },
+  {
+    "text": "In the AEC_Q100_Rev_H_Base_Document file, a new Section 1.2.4 was created to address Decommissioned Reference Documents, specifically guiding the removal of AEC-Q100-003 (Machine Model ESD) due to industry obsolescence and AEC-Q100-006 (Electrothermally Induced Gate Leakage) due to lack of industry need."
+  },
+  {
+    "text": "AEC_Q100_Rev_H_Base_Document :\nTable 2: Qualification Test Methods (continued), TEST GROUP E - ELECTRICAL VERIFICATION TESTS includes table header fields: STRESS, ABV, #, NOTES, SAMPLE SIZE / LOT, NUMBER OF LOTS, ACCEPT CRITERIA, TEST METHOD, ADDITIONAL REQUIREMENTS"
+  },
+  {
+    "text": "In the AEC_Q101_Rev_E_Base_Document file, the generation of a mission profile is explained. It involves adding detailed information on thermal, electrical, mechanical, and other forms of loading under use conditions to the basic lifetime characteristics, with examples of their relation to test conditions shown in Table A7.1."
+  },
+  {
+    "text": "AEC_Q100_Rev_H_Base_Document :\nIn TEST GROUP G - CAVITY PACKAGE INTEGRITY TESTS of Table 2: Qualification Test Methods (continued), for the item where the STRESS in the first column is Package Drop, its ABV is DROP, # is G5, NOTES is H, D, G, SAMPLE SIZE / LOT is 5, NUMBER OF LOTS is 1, ACCEPT CRITERIA is 0 Fails, TEST METHOD is —, and ADDITIONAL REQUIREMENTS is Drop part on each of 6 axes once from a height of 1.2m onto a concrete surface. This test is for MEMS cavity devices only. TEST before and after DROP at room temperature."
+  },
+  {
+    "text": "In the AEC_Q101_Rev_E_Base_Document file, the legend for Table 2 includes Note H, specifying that tests numbered 16 through 19 are required only for hermetic packaged parts and are performed sequentially to evaluate the mechanical integrity of packages with internal cavities."
+  },
+  {
+    "text": "In the AEC_Q101_Rev_E_Base_Document file, the legend for Table 2 includes Note D, identifying certain tests as destructive, meaning parts cannot be reused for qualification or production after testing."
+  },
+  {
+    "text": "In the AEC_Q101_Rev_E_Base_Document file, it is stated that prior qualification data from a part in a specific family can be extended to subsequent parts in that family, provided the supplier ensures no process changes have occurred."
+  },
+  {
+    "text": "In the AEC_Q100_Rev_H_Base_Document, the copyright notice indicates the document may be downloaded free of charge but not resold, is printed in the U.S.A., and can be freely reprinted with the copyright notice but cannot be changed without AEC Component Technical Committee approval."
+  },
+  {
+    "text": "In the AEC_Q100_Rev_H_Base_Document file, the document includes a series of attachments designated AEC-Q100-001 through AEC-Q100-012, which are specific test method standards, such as AEC-Q100-001 for Wire Bond Shear Test and AEC-Q100-011 for Charged Device Model (CDM) ESD Test."
+  },
+  {
+    "text": "In the AEC_Q101_Rev_E_Base_Document file, final authority and a key restriction on generic data are established. The user(s) retain final authority on accepting generic data in place of specific part test data. Furthermore, electrical characterization against the individual user part specification is mandatory for each part submission; generic characterization data is expressly not allowed."
+  },
+  {
+    "text": "In the AEC_Q101_Rev_E_Base_Document file, note U allows, for specific tests only, the qualification of a new die in an equivalent package (e.g., DPAK) using an unformed leaded package (e.g., IPAK), provided the die size falls within the qualified range for the target package."
+  },
+  {
+    "text": "AEC_Q100_Rev_H_Base_Document :\nTable 2: Qualification Test Methods (continued), TEST GROUP G - CAVITY PACKAGE INTEGRITY TESTS includes table header fields: STRESS, ABV, #, NOTES, SAMPLE SIZE / LOT, NUMBER OF LOTS, ACCEPT CRITERIA, TEST METHOD, ADDITIONAL REQUIREMENTS"
+  },
+  {
+    "text": "AEC_Q100_Rev_H_Base_Document :\nTable 2: Qualification Test Methods, TEST GROUP A - ACCELERATED ENVIRONMENT STRESS TESTS includes table header fields: STRESS, ABV, #, NOTES, SAMPLE SIZE / LOT, NUMBER OF LOTS, ACCEPT CRITERIA, TEST METHOD, ADDITIONAL REQUIREMENTS"
+  },
+  {
+    "text": "In the AEC_Q101_Rev_E_Base_Document file, for broad changes involving multiple attributes like site, materials, or processes, Section 2.3 is referenced, allowing the selection of worst-case test vehicles to cover all possible permutations."
+  },
+  {
+    "text": "In the AEC_Q101_Rev_E_Base_Document file, if a part fails the acceptance criteria, the supplier must determine the root cause, implement corrective actions, and verify their effectiveness; the part cannot be considered qualified until this process is complete and the user is assured the failure mechanism is contained."
+  },
+  {
+    "text": "In the AEC_Q101_Rev_E_Base_Document file, Appendix 6 warns that for certain part designs, especially those with green compound molding, etching with red fuming nitric acid and sulfuric acid at high temperatures can damage aluminum wires and pads of 5 mils or less, necessitating careful etchant selection."
+  },
+  {
+    "text": "AEC_Q101_Rev_E_Base_Document :\nTable 2: Qualification Test Methods (continued), TEST GROUP A - ACCELERATED ENVIRONMENT STRESS TESTS (continued), STRESS:Temperature Cycling Hot Test, ABV:TCHT, #:A4a, DATA TYPE:1, NOTES:D1G1U112, SAMPLE SIZE /LOT:77, NUMBER OF LOTS:3Note B, ACCEPT CRITERIA:0 Fails, TEST METHOD:JEDEC JESD22-A-104 Appendix 6, ADDITIONAL REQUIREMENTS:125°C TEST after TC using PV-determined limits at hot, followed by decap and wire pull (Test C3 WBP) on all wires from 5 devices per appendix 6 for parts with internal bond wire sizes 5 mil diameter and less. (Samples may be a sub set of test A4)."
+  },
+  {
+    "text": "AEC_Q101_Rev_E_Base_Document :\nIn TEST GROUP C - PACKAGE ASSEMBLY INTEGRITY TESTS of Table 2: Qualification Test Methods (continued), for the item where the STRESS in the first column is Wire Bond Pull Strength, its ABV is WBP, # is C3, DATA TYPE is 3, NOTES is D⊥G⊥E, SAMPLE SIZE /LOT is 10 bonds from min of 5 parts, NUMBER OF LOTS is 10 bonds from min of 5 parts, ACCEPT CRITERIA is 0 Fails, TEST METHOD is MIL-STD-750-2 Method 2037 for Au and Al wire AEC Q006 for Cu wire, and ADDITIONAL REQUIREMENTS is Condition C or D. For Au wire diameter >1mil, minimum pull strength after TC = 3 grams. For Au wire diameter <1mil, refer to MIL-STD-750-2 Method 2037 as a guideline for minimum pull strength. For Au wire diameter <1mil, wire bond pull shall be performed with the hook over the ball bond and not at mid-wire."
+  },
+  {
+    "text": "In the AEC_Q100_Rev_H_Base_Document file, Pb-Free processing typically requires higher board attach temperatures for solder joint quality, which may adversely affect moisture sensitivity, potentially necessitating more robust mold compounds."
+  },
+  {
+    "text": "In the AEC_Q101_Rev_E_Base_Document file, the purpose of Appendix 6 is defined as providing a guideline for opening plastic packaged devices to enable reliable wire pull or bond shear testing, specifically intended for use after temperature cycle testing or for bond shear evaluation."
+  },
+  {
+    "text": "In the AEC_Q100_Rev_H_Base_Document file, the supplier must provide a Certificate of Design, Construction and Qualification (Appendix 2), Stress Test Qualification data (Table 2 & Appendix 4), and data on the fault grading level of qualification software per Q100-007 for each new device qualification."
+  },
+  {
+    "text": "In the AEC_Q101_Rev_E_Base_Document file, it is specified that all parts, both before and after stress testing, must be tested for their electrical characteristics as defined in the individual user's part detail specification, and these tests must be conducted at room temperature."
+  },
+  {
+    "text": "AEC_Q100_Rev_H_Base_Document :\nIn TEST GROUP C - PACKAGE ASSEMBLY INTEGRITY TESTS of Table 2: Qualification Test Methods (continued), for the item where the STRESS in the first column is Wire Bond Pull, its ABV is WBP, # is C2, NOTES is H, P, D, G, SAMPLE SIZE / LOT is 30 bonds from a minimum of 5 devices, NUMBER OF LOTS is 30 bonds from a minimum of 5 devices, ACCEPT CRITERIA is CPK>1.67 or 0 Fails after TC (test #A4), TEST METHOD is MIL-STD883 Method 2011 AEC Q003, and ADDITIONAL REQUIREMENTS is Condition C or D. For Au wire diameter ≥1mil, minimum pull strength after TC = 3 grams. For Au wire diameter <1mil, refer to Figure 2011-1 in MIL-STD-883 Method 2011 as a guideline for minimum pull strength. For Au wire diameter <1mil, wire bond pull shall be performed with the hook over the ball bond and not at mid-wire."
+  },
+  {
+    "text": "In the AEC_Q101_Rev_E_Base_Document file, specific test method attachments are cataloged, such as AEC-Q101-001 for the Human Body Model Electrostatic Discharge Test and AEC-Q101-006 for Short Circuit Reliability Characterization of Smart Power Devices for 12V Systems."
+  },
+  {
+    "text": "AEC_Q100_Rev_H_Base_Document :\nIn TEST GROUP E - ELECTRICAL VERIFICATION TESTS (CONTINUED) of Table 2: Qualification Test Methods (continued), for the item where the STRESS in the first column is Lead (Pb) Free, its ABV is LF, # is E12, NOTES is L, SAMPLE SIZE / LOT is See Test Method, NUMBER OF LOTS is See Test Method, ACCEPT CRITERIA is See Test Method, TEST METHOD is AEC Q005, and ADDITIONAL REQUIREMENTS is Applicable to ALL Pb-free devices. Note the recommendations for all related solderability, solder heat resistance and whisker requirements."
+  },
+  {
+    "text": "In the AEC_Q101_Rev_E_Base_Document file, Section A7.3 states that two flow charts are available to facilitate reliability capability assessment for both Tier 1 users and Component Manufacturers, addressing scenarios where standard qualification may need augmentation based on mission profiles."
+  },
+  {
+    "text": "In the AEC_Q101_Rev_E_Base_Document file, a note clarifies that all electrical testing before and after qualification stresses, including pre-conditioning, must be performed to the limits in the individual user specification at room temperature, or the supplier's standard specification limits for generic qualifications."
+  },
+  {
+    "text": "In the AEC_Q100_Rev_H_Base_Document file, the Metallization is detailed by its material, thickness range, and number of levels, and the Passivation process is defined by steps like passivation oxide opening, along with its material and thickness range."
+  },
+  {
+    "text": "In the AEC_Q101_Rev_E_Base_Document file, Appendix 7 references key industry documents. These include the SAE J1879/J1211/ZVEI Handbook for Robustness Validation of Semiconductor Devices in Automotive Applications and the JEDEC JEP122 standard on Failure Mechanisms and Models for Semiconductor Devices."
+  },
+  {
+    "text": "In the AEC_Q101_Rev_E_Base_Document file, note V specifies that for bi-directional Transient Voltage Suppressor (TVS) devices, the test duration must be split equally, with one-half performed in each direction."
+  },
+  {
+    "text": "AEC_Q101_Rev_E_Base_Document :\nIn TEST GROUP A - ACCELERATED ENVIRONMENT STRESS TESTS (continued) of Table 2: Qualification Test Methods (continued), for the item where the STRESS in the first column is Intermittent Operational Life, its ABV is IOL, # is A5, DATA TYPE is 1, NOTES is D1G1P1T1U1W1, SAMPLE SIZE /LOT is 77, NUMBER OF LOTS is 3Note B, ACCEPT CRITERIA is 0 Fails, TEST METHOD is MIL-STD-750 Method 1037, and ADDITIONAL REQUIREMENTS is Tested per duration indicated in Table 2A. TA=25°C. Parts powered to insure ΔTJ≥100°C (not to exceed absolute maximum ratings). TEST before and after IOL as a minimum. See Section 2.4 for RDSon pass/fail limits."
+  },
+  {
+    "text": "In the AEC_Q101_Rev_E_Base_Document file, note N defines a test as nondestructive, allowing tested parts to be subsequently used to populate other qualification tests or even for production purposes, which optimizes component usage."
+  },
+  {
+    "text": "In the AEC_Q100_Rev_H_Base_Document file, a new Appendix 7 – Guideline on Relationship of Robustness Validation to AEC-Q100 has been added, containing explanatory text, new Figures A7.1 & A7.2, and a new Table A7.1 to illustrate the relationship."
+  },
+  {
+    "text": "AEC_Q101_Rev_E_Base_Document :\nIn TEST GROUP E - ELECTRICAL VERIFICATION TESTS of Table 2: Qualification Test Methods (continued), for the item where the STRESS in the first column is External Visual, its ABV is EV, # is E0, DATA TYPE is 1, NOTES is G⊥N, SAMPLE SIZE /LOT is All qualification parts submitted for testing, NUMBER OF LOTS is All qualification parts submitted for testing, ACCEPT CRITERIA is 0 Fails, TEST METHOD is JEDEC JESD22-B101, and ADDITIONAL REQUIREMENTS is Inspect part construction, marking and workmanship."
+  },
+  {
+    "text": "In the AEC_Q101_Rev_E_Base_Document file, references for applying the assessment method are provided, including SAE J1879, SAE J1211, and the ZVEI Handbook for Robustness Validation of Semiconductor Devices in Automotive Applications."
+  },
+  {
+    "text": "In the AEC_Q100_Rev_H_Base_Document file, two flow charts facilitate assessment: Flow Chart 1 for Component Manufacturers qualifying new parts, and Flow Chart 2 for Tier 1s assessing components for new ECUs or for using qualified parts in new applications, leading to conclusions [A], [B], or [C]."
+  },
+  {
+    "text": "AEC_Q100_Rev_H_Base_Document :\nIn TEST GROUP G - CAVITY PACKAGE INTEGRITY TESTS of Table 2: Qualification Test Methods (continued), for the item where the STRESS in the first column is Variable Frequency Vibration, its ABV is VFV, # is G2, NOTES is H, D, G, SAMPLE SIZE / LOT is 15, NUMBER OF LOTS is 1, ACCEPT CRITERIA is 0 Fails, TEST METHOD is JEDEC JESD22-B103, and ADDITIONAL REQUIREMENTS is 20 Hz to 2 KHz to 20 Hz (logarithmic variation) in >4 minutes, 4X in each orientation, 50 g peak acceleration. TEST before and after at room temperature."
+  },
+  {
+    "text": "In the AEC_Q100_Rev_H_Base_Document, Section 2.5, which defines a Test Failure After Stressing, has been updated with a new statement concerning Electrical Overstress (EOS) conditions."
+  },
+  {
+    "text": "In the AEC_Q101_Rev_E_Base_Document file, it is stipulated that parts exceeding the defined failure criteria require justification from the supplier and approval from the user; failures agreed to be due to mishandling or ESD are to be discounted but must still be reported in the data submission."
+  },
+  {
+    "text": "AEC_Q100_Rev_H_Base_Document :\nTable 2: Qualification Test Methods (continued), TEST GROUP E - ELECTRICAL VERIFICATION TESTS, STRESS:Electrostatic Discharge Charged Device Model, ABV:CDM, #:E3, NOTES:H, P, B, D, SAMPLE SIZE / LOT:See Test Method, NUMBER OF LOTS:1, ACCEPT CRITERIA:Target: 0 Fails 750V corner pins, 500V all other pins (Classification C4B or better), TEST METHOD:AEC Q100-011, ADDITIONAL REQUIREMENTS:TEST before and after ESD at room and hot temperature. Device shall be classified according to the maximum withstand voltage level. Device levels <750V corner pins and/or <500V all other pins CDM require specific user approval. Refer to Section 1.3.1."
+  },
+  {
+    "text": "AEC_Q100_Rev_H_Base_Document :\nIn TEST GROUP D - DIE FABRICATION RELIABILITY TESTS (CONTINUED) of Table 2: Qualification Test Methods (continued), for the item where the STRESS in the first column is Stress Migration, its ABV is SM, # is D5, NOTES is —, SAMPLE SIZE / LOT is —, NUMBER OF LOTS is —, ACCEPT CRITERIA is —, TEST METHOD is —, and ADDITIONAL REQUIREMENTS is The data, test method, calculations and internal criteria should be available to the user upon request for new technologies."
+  },
+  {
+    "text": "AEC_Q100_Rev_H_Base_Document :\nTable 2: Qualification Test Methods (continued), TEST GROUP C - PACKAGE ASSEMBLY INTEGRITY TESTS, STRESS:Wire Bond Shear, ABV:WBS, #:C1, NOTES:H, P, D, G, SAMPLE SIZE / LOT:30 bonds from a minimum of 5 devices, NUMBER OF LOTS:30 bonds from a minimum of 5 devices, ACCEPT CRITERIA:CPK>1.67, TEST METHOD:AEC Q100-001 AEC Q003, ADDITIONAL REQUIREMENTS:At appropriate time interval for each bonder to be used."
+  },
+  {
+    "text": "In the AEC_Q100_Rev_H_Base_Document file, Test E8 for Electrothermally Induced Gate Leakage has been completely eliminated from the qualification requirements."
+  },
+  {
+    "text": "In the AEC_Q100_Rev_H_Base_Document file, Table 3 outlines a superset of qualification tests required for evaluating new processes or process changes, serving as a baseline for supplier-user discussions, with the supplier responsible for justifying any test omissions."
+  },
+  {
+    "text": "In the AEC_Q101_Rev_E_Base_Document file, a note specifies that for certain part designs, particularly small packages, mounting the part may be necessary. This step ensures the structural integrity of the package is maintained throughout both the package opening process and the subsequent wire pull testing."
+  },
+  {
+    "text": "AEC_Q100_Rev_H_Base_Document :\nTable 2: Qualification Test Methods (continued), TEST GROUP C - PACKAGE ASSEMBLY INTEGRITY TESTS, STRESS:Solderability, ABV:SD, #:C3, NOTES:H, P, D, G, SAMPLE SIZE / LOT:15, NUMBER OF LOTS:1, ACCEPT CRITERIA:>95% lead coverage, TEST METHOD:JEDEC JESD22-B102 or JEDEC J-STD-002D, ADDITIONAL REQUIREMENTS:If burn-in screening is normally performed on the device before shipment, samples for SD must first undergo burn-in. Perform 8 hour steam aging prior to testing (1 hour for Au-plated leads). The customer can request justification for using dry bake in place of steam aging."
+  },
+  {
+    "text": "In the AEC_Q101_Rev_E_Base_Document file, regarding HAST versus UHAST, it is noted that bias does have an effect on failure rate and may be used to accelerate testing if the component allows for higher bias, such as in cases involving corrosion or mobile ions."
+  },
+  {
+    "text": "In the AEC_Q100_Rev_H_Base_Document file, Appendix 5 outlines criteria for EMC testing candidacy, targeting digital technologies like microprocessors and high-speed ICs that may produce radiated emissions interfering with communication receivers."
+  },
+  {
+    "text": "In the AEC_Q101_Rev_E_Base_Document file, the NOTICE clarifies that AEC documents aim to eliminate misunderstandings in the automotive electronics industry, facilitate product interchangeability, and are adopted without regard to potential patents."
+  },
+  {
+    "text": "In the AEC_Q100_Rev_H_Base_Document file, generic data must be based on a matrix linking device characteristics and manufacturing processes, as detailed in Table 3 and Appendix 1, and data containing failures is unusable unless corrective action is documented and accepted."
+  },
+  {
+    "text": "In the AEC_Q100_Rev_H_Base_Document file, a mission profile is defined as the comprehensive collection of all relevant environmental and functional loads that a semiconductor component will be exposed to throughout its entire use lifetime."
+  },
+  {
+    "text": "AEC_Q100_Rev_H_Base_Document :\nTable 2: Qualification Test Methods (continued), TEST GROUP D - DIE FABRICATION RELIABILITY TESTS, STRESS:Time Dependent Dielectric Breakdown, ABV:TDDB, #:D2, NOTES:—, SAMPLE SIZE / LOT:—, NUMBER OF LOTS:—, ACCEPT CRITERIA:—, TEST METHOD:—, ADDITIONAL REQUIREMENTS:The data, test method, calculations and internal criteria should be available to the user upon request for new technologies."
+  },
+  {
+    "text": "AEC_Q101_Rev_E_Base_Document :\nTable 2: Qualification Test Methods (continued), TEST GROUP A - ACCELERATED ENVIRONMENT STRESS TESTS (continued), STRESS:Power Temperature Cycling, ABV:PTC, #:A5 alt, DATA TYPE:1, NOTES:D1G1T1U1W, SAMPLE SIZE /LOT:77, NUMBER OF LOTS:3Note B, ACCEPT CRITERIA:0 Fails, TEST METHOD:JEDEC JESD22-A-105, ADDITIONAL REQUIREMENTS:Perform PTC if ΔTJ≥100°C cannot be achieved with IOL. Tested per duration indicated for Timing Requirements in Table 2A. Parts powered and chamber cycled to insure ΔTJ≥100°C (not to exceed absolute maximum ratings). TEST before and after PTC as a minimum. See Section 2.4 for RDSon pass/fail limits."
+  },
+  {
+    "text": "In the AEC_Q100_Rev_H_Base_Document file, controlling manufacturing variation and achieving low PPM reliability are addressed through dedicated process controls and screening methods, as outlined in standards AEC-Q001 and AEC-Q002."
+  },
+  {
+    "text": "In the AEC_Q101_Rev_E_Base_Document file, when proposing the use of \"family\" data in the Qualification Test Plan, the plan must document how previously completed reliability testing fulfills the requirements of the specification. An approved copy of this plan must be included with each qualification submission."
+  },
+  {
+    "text": "In the AEC_Q100_Rev_H_Base_Document file, Appendix 1 defines the criteria for grouping components into a qualification family, allowing data from all family members to be considered generically acceptable for qualifying a specific device."
+  },
+  {
+    "text": "In the AEC_Q100_Rev_H_Base_Document file, the military reference document specified is MIL-STD-883, which outlines Test Methods and Procedures for Microelectronics."
+  },
+  {
+    "text": "In the AEC_Q101_Rev_E_Base_Document file, Table 3 presents a matrix of appropriate qualification tests for any proposed part changes, applicable to both new processes and re-qualification; it is a superset for baseline discussions between supplier and user."
+  },
+  {
+    "text": "In the AEC_Q101_Rev_E_Base_Document file, the attributes defining a wafer fab process for family qualification are listed, including process flow, layout design rules, number of masks, cell density, lithographic process, doping process, passivation material/thickness, oxidation process/thickness, and front/back metallization details."
+  },
+  {
+    "text": "In the AEC_Q100_Rev_H_Base_Document file, the prescribed sample size is deemed sufficient for detecting intrinsic flaws related to component design, construction, or material that affect performance."
+  },
+  {
+    "text": "In the AEC_Q100_Rev_H_Base_Document file, the flow chart analysis yields three definitive conclusions: AEC-Q100 test conditions apply, mission-profile-specific test conditions may apply, or Robustness Validation may be applied with detailed Tier1-Manufacturer alignment."
+  },
+  {
+    "text": "In the AEC_Q100_Rev_H_Base_Document file, Test F1 for Part Average Testing has been modified, with its Additional Requirements section now providing specific guidance on statistical sample sizes and acceptance criteria."
+  },
+  {
+    "text": "AEC_Q101_Rev_E_Base_Document :\nTable 2: Qualification Test Methods, TEST GROUP A - ACCELERATED ENVIRONMENT STRESS TESTS, STRESS:Temperature Cycling, ABV:TC, #:A4, DATA TYPE:1, NOTES:D_G1U_3, SAMPLE SIZE /LOT:77, NUMBER OF LOTS:3 Note B, ACCEPT CRITERIA:0 Fails, TEST METHOD:JEDEC JESD22-A-104 Appendix 6, ADDITIONAL REQUIREMENTS:1000 cycles (TA = minimum range of -55°C to maximum rated junction temperature, not to exceed 150°C). Can reduce duration to 400 cycles using TA (max) = 25°C over part maximum rated junction temperature or using TA(max) = 175°C if the maximum rated junction temperature is above 150°C. TEST before and after TC. See Section 2.4 for RDson pass/fail limits."
+  },
+  {
+    "text": "In the AEC_Q101_Rev_E_Base_Document file, the legend for Table 2 includes Note P, which advises that consideration should be made for whether a test applies to a Smart Power part or should be substituted with an equivalent Q100 test, based on factors like logic/sensing on the die, application, switching speed, power dissipation, and pin count."
+  },
+  {
+    "text": "In the AEC_Q101_Rev_E_Base_Document file, Table 1 outlines requirements for applying available part test data to reduce the number of lots needed for qualification. It serves as a guideline for leveraging existing data to streamline the qualification process."
+  },
+  {
+    "text": "In the AEC_Q101_Rev_E_Base_Document file, production requirements mandate that all qualification parts be manufactured using the tooling and processes at the site intended for volume production deliveries, ensuring representativeness."
+  },
+  {
+    "text": "In the AEC_Q100_Rev_H_Base_Document, the final entries in Table 2 include: the elimination of Test E8 (Electrothermally Induced Gate Leakage); the addition of a new Test E12 for Lead (Pb) Free qualification; updates to Tests F1 and F2 (Part Average Testing and Statistical Bin/Yield Analysis) with modified guidance on sample sizes and accept criteria; and a modification to Test G1 (Mechanical Shock) regarding sample size per lot and the number of lots required."
+  },
+  {
+    "text": "In the AEC_Q101_Rev_E_Base_Document file, the assembly process attributes consist of leadframe base material, leadframe plating (internal/external), die attach material/method, wire bond material/diameter/process, and the plastic mold compound or other encapsulation material."
+  },
+  {
+    "text": "In the AEC_Q100_Rev_H_Base_Document file, a 'worst case' family requalification with appropriate tests is mandated whenever there is a change to the process or a material, with guidelines for this process provided in Table A1."
+  },
+  {
+    "text": "AEC_Q100_Rev_H_Base_Document :\nIn TEST GROUP G - CAVITY PACKAGE INTEGRITY TESTS of Table 2: Qualification Test Methods (continued), for the item where the STRESS in the first column is Die Shear, its ABV is DS, # is G7, NOTES is H, D, G, SAMPLE SIZE / LOT is 5, NUMBER OF LOTS is 1, ACCEPT CRITERIA is 0 Fails, TEST METHOD is MIL-STD-883 Method 2019, and ADDITIONAL REQUIREMENTS is To be performed before cap/seal for all cavity devices."
+  },
+  {
+    "text": "In the AEC_Q100_Rev_H_Base_Document file, generic data for qualification must include material details, functional specifications, and test results of devices, along with a rationale justifying the use of such generic data."
+  },
+  {
+    "text": "In the AEC_Q100_Rev_H_Base_Document file, for initial qualification, the supplier must provide Stress Test Qualification data, with references to Table 2 and Appendix 4 for specific requirements."
+  },
+  {
+    "text": "AEC_Q100_Rev_H_Base_Document :\nTable 2: Qualification Test Methods (continued), TEST GROUP B - ACCELERATED LIFETIME SIMULATION TESTS, STRESS:Early Life Failure Rate, ABV:ELFR, #:B2, NOTES:H, P, B, N, G, SAMPLE SIZE / LOT:800, NUMBER OF LOTS:3, ACCEPT CRITERIA:0 Fails, TEST METHOD:AEC Q100-008, ADDITIONAL REQUIREMENTS:Devices that pass this stress can be used to populate other stress tests. Generic data is applicable. TEST before and after ELFR at room and hot temperature."
+  },
+  {
+    "text": "AEC_Q101_Rev_E_Base_Document :\nTable 2: Qualification Test Methods (continued), TEST GROUP C - PACKAGE ASSEMBLY INTEGRITY TESTS, STRESS:Wire Bond Pull Strength, ABV:WBP, #:C3, DATA TYPE:3, NOTES:D⊥G⊥E, SAMPLE SIZE /LOT:10 bonds from min of 5 parts, NUMBER OF LOTS:10 bonds from min of 5 parts, ACCEPT CRITERIA:0 Fails, TEST METHOD:MIL-STD-750-2 Method 2037 for Au and Al wire AEC Q006 for Cu wire, ADDITIONAL REQUIREMENTS:Condition C or D. For Au wire diameter >1mil, minimum pull strength after TC = 3 grams. For Au wire diameter <1mil, refer to MIL-STD-750-2 Method 2037 as a guideline for minimum pull strength. For Au wire diameter <1mil, wire bond pull shall be performed with the hook over the ball bond and not at mid-wire."
+  },
+  {
+    "text": "In the AEC_Q100_Rev_H_Base_Document, Section 1 SCOPE defines the document as containing a set of failure mechanism based stress tests that set minimum qualification requirements for integrated circuits (ICs), aiming to accelerate failures compared to use conditions."
+  },
+  {
+    "text": "In the AEC_Q101_Rev_E_Base_Document file, a qualification example specifies that three lots from a single FAB family, in any package outline, are required for High Temperature Reverse Bias (HTRB), High Temperature Gate Bias (HTGB), and H3TRB/HAST stress tests."
+  },
+  {
+    "text": "AEC_Q101_Rev_E_Base_Document :\nTable 2: Qualification Test Methods (continued), TEST GROUP B - ACCELERATED LIFETIME SIMULATION TESTS, STRESS:AC blocking voltage, ABV:ACBV, #:B1a, DATA TYPE:1, NOTES:DxGxPxUxY, SAMPLE SIZE /LOT:77, NUMBER OF LOTS:3 Note B, ACCEPT CRITERIA:0 Fails, TEST METHOD:MIL-STD-750-1 M1040 condition A, ADDITIONAL REQUIREMENTS:1000 hours at the maximum AC blocking voltage and junction temperature specified in the user/supplier specification. The ambient temperature TA is to be adjusted to compensate for current leakage. TEST before and after ACBV as a minimum."
+  },
+  {
+    "text": "In the AEC_Q100_Rev_H_Base_Document file, failures caused by mishandling like EOS or ESD, or other non-reliability-related causes, must be discounted from reliability assessments but still reported as part of the data submission."
+  },
+  {
+    "text": "In the AEC_Q100_Rev_H_Base_Document file, supplier identification details, including the supplier name and contact information, are mandatory for traceability and communication purposes."
+  },
+  {
+    "text": "In the AEC_Q101_Rev_E_Base_Document file, manufacturing variation failures (low ppm issues) are addressed through proper process controls and screens as described in AEC-Q001 and -Q002, rather than through the qualification sample size."
+  },
+  {
+    "text": "AEC_Q100_Rev_H_Base_Document :\nTable 2: Qualification Test Methods (continued), TEST GROUP A - ACCELERATED ENVIRONMENT STRESS TESTS (CONTINUED), STRESS:Temperature Cycling, ABV:TC, #:A4, NOTES:H, P, B, D, G, SAMPLE SIZE / LOT:77, NUMBER OF LOTS:3, ACCEPT CRITERIA:0 Fails, TEST METHOD:JEDEC JESD22-A104 and Appendix 3, ADDITIONAL REQUIREMENTS:PC before TC for surface mount devices. Grade 0: -55°C to +150°C for 2000 cycles or equivalent. Grade 1: -55°C to +150°C for 1000 cycles or equivalent. Note: -65°C to 150°C for 500 cycles is also an allowed test condition due to legacy use with no known lifetime issues. Grade 2: -55°C to +125°C for 1000 cycles or equivalent. Grade 3: -55°C to +125°C for 500 cycles or equivalent. TEST before and after TC at hot temperature. After completion of TC, decap five devices from one lot and perform WBP (test #C2) on corner bonds (2 bonds per corner) and one mid-bond per side on each device. Preferred decap procedure to minimize damage and chance of false data is shown in Appendix 3."
+  },
+  {
+    "text": "In the AEC_Q100_Rev_H_Base_Document file, if an encapsulation material change is needed for Pb-Free processing robustness, the supplier should refer to the process change qualification requirements within the specification."
+  },
+  {
+    "text": "In the AEC_Q100_Rev_H_Base_Document file, Autoclave testing at 121 °C and 100% RH is described as a highly accelerated, saturated moisture condition test that reveals failure mechanisms not typical in normal use, with conditions established decades ago and not derivable from models."
+  },
+  {
+    "text": "In the AEC_Q101_Rev_E_Base_Document file, an example in Appendix 3 demonstrates the use of the Qualification Test Plan Form. It features a bipolar discrete part qualification that requests reduced component testing by including generic test data, illustrating the process without limiting requirements from Table 1."
+  },
+  {
+    "text": "AEC_Q100_Rev_H_Base_Document :\nIn TEST GROUP G - CAVITY PACKAGE INTEGRITY TESTS of Table 2: Qualification Test Methods (continued), for the item where the STRESS in the first column is Internal Water Vapor, its ABV is IWV, # is G8, NOTES is H, D, G, SAMPLE SIZE / LOT is 5, NUMBER OF LOTS is 1, ACCEPT CRITERIA is 0 Fails, TEST METHOD is MIL-STD-883 Method 1018, and ADDITIONAL REQUIREMENTS is For ceramic packaged cavity devices only."
+  },
+  {
+    "text": "AEC_Q101_Rev_E_Base_Document :\nTable 2: Qualification Test Methods, TEST GROUP A - ACCELERATED ENVIRONMENT STRESS TESTS includes table header fields: STRESS, ABV, #, DATA TYPE, NOTES, SAMPLE SIZE /LOT, NUMBER OF LOTS, ACCEPT CRITERIA, TEST METHOD, ADDITIONAL REQUIREMENTS"
+  },
+  {
+    "text": "AEC_Q101_Rev_E_Base_Document :\nTable 2: Qualification Test Methods, TEST GROUP A - ACCELERATED ENVIRONMENT STRESS TESTS, STRESS:Autoclave, ABV:AC, #:A3alt, DATA TYPE:1, NOTES:D_G1U, SAMPLE SIZE /LOT:77, NUMBER OF LOTS:3 Note B, ACCEPT CRITERIA:0 Fails, TEST METHOD:JEDEC JESD22-A-102, ADDITIONAL REQUIREMENTS:96 hours, TA=121°C, RH = 100%, 15psig. TEST before and after AC."
+  },
+  {
+    "text": "In the AEC_Q101_Rev_E_Base_Document file, the purpose of the specification is outlined as determining a part's capability to pass specified stress tests, thereby providing an expected level of quality and reliability in its application."
+  },
+  {
+    "text": "In the AEC_Q100_Rev_H_Base_Document file, pre- and post-stress test requirements specify that end-point test temperatures, which may include room, hot, and/or cold temperatures, are detailed in the 'Additional Requirements' column of Table 2 for each test."
+  },
+  {
+    "text": "In the AEC_Q100_Rev_H_Base_Document file, preconditioning for Pb-Free devices must be performed at the Pb-free reflow classification temperatures described in IPC/JEDEC J-STD-020 before environmental stress tests."
+  },
+  {
+    "text": "AEC_Q100_Rev_H_Base_Document :\nIn TEST GROUP G - CAVITY PACKAGE INTEGRITY TESTS of Table 2: Qualification Test Methods (continued), for the item where the STRESS in the first column is Gross/Fine Leak, its ABV is GFL, # is G4, NOTES is H, D, G, SAMPLE SIZE / LOT is 15, NUMBER OF LOTS is 1, ACCEPT CRITERIA is 0 Fails, TEST METHOD is MIL-STD-883 Method 1014, and ADDITIONAL REQUIREMENTS is Any single-specified fine test followed by any single-specified gross test. For ceramic packaged cavity devices only."
+  },
+  {
+    "text": "In the AEC_Q100_Rev_H_Base_Document file, requalification of a changed device is required when a supplier makes any product or process change that impacts or could potentially impact the device's form, fit, function, quality, or reliability, as guided by Table 3."
+  },
+  {
+    "text": "In the AEC_Q101_Rev_E_Base_Document file, the purpose of Appendix 1 is explained. It defines the specific criteria by which parts can be grouped into a qualification family. This grouping allows data from all family members to be considered equal and generically acceptable for qualifying the part in question, facilitating data pooling."
+  },
+  {
+    "text": "In the AEC_Q100_Rev_H_Base_Document file, Appendix 3 specifies the subsequent chemical or plasma etching step to remove plastic material, exposing the die bond pad, bond wire loop, and at least a portion of the bond wire length, while cautioning against exposing the wire bond at the lead frame to prevent degradation by etchants."
+  },
+  {
+    "text": "AEC_Q101_Rev_E_Base_Document :\nTable 2: Qualification Test Methods, TEST GROUP A - ACCELERATED ENVIRONMENT STRESS TESTS, with table header fields: STRESS, ABV, #, DATA TYPE, NOTES, SAMPLE SIZE /LOT, NUMBER OF LOTS, ACCEPT CRITERIA, TEST METHOD, ADDITIONAL REQUIREMENTS"
+  },
+  {
+    "text": "In the AEC_Q101_Rev_E_Base_Document file, the parameter 'y' is defined as the minimum time required for a part to cool from a specified required temperature back to ambient temperature, completing the thermal cycle profile."
+  },
+  {
+    "text": "AEC_Q100_Rev_H_Base_Document :\nIn TEST GROUP C - PACKAGE ASSEMBLY INTEGRITY TESTS of Table 2: Qualification Test Methods (continued), for the item where the STRESS in the first column is Physical Dimensions, its ABV is PD, # is C4, NOTES is H, P, D, G, SAMPLE SIZE / LOT is 10, NUMBER OF LOTS is 3, ACCEPT CRITERIA is CPK>1.67, TEST METHOD is JEDEC JESD22-B100 and B108 AEC Q003, and ADDITIONAL REQUIREMENTS is See applicable JEDEC standard outline and individual device spec for significant dimensions and tolerances."
+  },
+  {
+    "text": "In the AEC_Q100_Rev_H_Base_Document file, it is established that, at a minimum, any change that affects the product's form, fit, function, quality, or reliability necessitates a full requalification process to ensure continued compliance and reliability."
+  },
+  {
+    "text": "In the AEC_Q101_Rev_E_Base_Document file, the subsequent step in the wire bond test opening procedure is to use a chemical etchant or plasma etcher to remove plastic material, exposing the die bond pad, bond wire loop, and at least a portion of the bond wire length for testing."
+  },
+  {
+    "text": "In the AEC_Q100_Rev_H_Base_Document file, key wafer fab attributes include the Substrate specifications, covering orientation, doping, epitaxial layer, and wafer size, and the Number of masks, for which a supplier must justify any waiver."
+  },
+  {
+    "text": "In the AEC_Q100_Rev_H_Base_Document file, the foundational attribute defining a fab process is the Wafer Fab Technology, with examples including CMOS, NMOS, and Bipolar technologies."
+  },
+  {
+    "text": "In the AEC_Q100_Rev_H_Base_Document, the entire Section 3.1.1 on 'Qualification of A New Device Manufactured in A Currently Qualified Family' has been deleted, as its subject matter is now comprehensively covered in Appendix 1."
+  },
+  {
+    "text": "AEC_Q101_Rev_E_Base_Document :\nIn TEST GROUP C - PACKAGE ASSEMBLY INTEGRITY TESTS of Table 2: Qualification Test Methods (continued), for the item where the STRESS in the first column is Die Shear, its ABV is DS, # is C5, DATA TYPE is 3, NOTES is D⊥G, SAMPLE SIZE /LOT is 5, NUMBER OF LOTS is 1, ACCEPT CRITERIA is 0 Fails, TEST METHOD is MIL-STD-750-2 Method 2017, and ADDITIONAL REQUIREMENTS is Also required for Pre- & Post-process change comparison to evaluate process change robustness related to die attach per Table 3 guidelines for test C5."
+  },
+  {
+    "text": "In the AEC_Q100_Rev_H_Base_Document file, the legend for Table 2 defines critical codes: 'H' for hermetic packages only, 'P' for plastic packages only, 'B' for BGA devices only, 'N' for nondestructive tests, and 'D' for destructive tests where devices cannot be reused."
+  },
+  {
+    "text": "In the AEC_Q100_Rev_H_Base_Document file, Table 3 - Process Change Qualification Guidelines for the Selection of Tests has been revised by removing the MM (Machine Model) ESD and GL (Gate Leakage) entries and adding a new LF (Lead Free) test entry."
+  },
+  {
+    "text": "In the AEC_Q101_Rev_E_Base_Document file, the Table of Contents lists the main body and seven appendices, including Appendix 1 on the Definition of a Qualification Family and Appendix 7 on AEC-Q101 and the Use of Mission Profiles, outlining the document's comprehensive structure."
+  },
+  {
+    "text": "In the AEC_Q100_Rev_H_Base_Document file, for parts operating at different power supplies (e.g., 5.0 V and 3.3 V), product qualification family data must be presented for both supply ranges to ensure coverage."
+  },
+  {
+    "text": "AEC_Q100_Rev_H_Base_Document :\nTable 2: Qualification Test Methods (continued), TEST GROUP E - ELECTRICAL VERIFICATION TESTS (CONTINUED), STRESS:Soft Error Rate, ABV:SER, #:E11, NOTES:H, P, D, G, SAMPLE SIZE / LOT:3, NUMBER OF LOTS:1, ACCEPT CRITERIA:—, TEST METHOD:JEDEC Un-accelerated: JESD89-1 or Accelerated: JESD89-2 & JESD89-3, ADDITIONAL REQUIREMENTS:Applicable to devices with memory sizes ≥1Mbit SRAM or DRAM based cells. Either test option (un-accelerated or accelerated) can be performed, in accordance to the referenced specifications. This test and its accept criteria is performed per agreement between user and supplier on a case-by-case basis. Final test report shall include detailed test facility location and altitude data."
+  },
+  {
+    "text": "In the AEC_Q100_Rev_H_Base_Document file, Section A1.1 defines product attributes for a qualification family, including product functionality (e.g., Op-Amp, microprocessor), operating supply voltage range(s), specified operating temperature range, and specified operating frequency range."
+  },
+  {
+    "text": "AEC_Q100_Rev_H_Base_Document :\nTable 2: Qualification Test Methods (continued), TEST GROUP A - ACCELERATED ENVIRONMENT STRESS TESTS (CONTINUED), STRESS:Power Temperature Cycling, ABV:PTC, #:A5, NOTES:H, P, B, D, G, SAMPLE SIZE / LOT:45, NUMBER OF LOTS:1, ACCEPT CRITERIA:0 Fails, TEST METHOD:JEDEC JESD22-A105, ADDITIONAL REQUIREMENTS:PC before PTC for surface mount devices. Test required only on devices with maximum rated power ≥ 1 watt or ΔTJ ≥ 40°C or devices designed to drive inductive loads. Grade 0: Ta of -40°C to +150°C for 1000 cycles. Grade 1: Ta of -40°C to +125°C for 1000 cycles. Grades 2 and 3: Ta -40°C to +105°C for 1000 cycles. Thermal shut-down shall not occur during this test. TEST before and after PTC at room and hot temperature."
+  },
+  {
+    "text": "In the AEC_Q100_Rev_H_Base_Document, Section 1.2.1 lists Automotive reference documents: AEC-Q001 Guidelines for Part Average Testing, AEC-Q002 Guidelines for Statistical Yield Analysis, AEC-Q003 Guidelines for Characterizing Electrical Performance, AEC-Q004 Zero Defects Guideline (DRAFT), AEC-Q005 Pb-Free Requirements, and SAE J1752/3 Integrated Circuits Radiated Emissions Measurement Procedure."
+  },
+  {
+    "text": "In the AEC_Q101_Rev_E_Base_Document file, reusability rules state that parts from nondestructive qualification tests may be reused in other tests, while parts from destructive tests are restricted to engineering analysis only."
+  },
+  {
+    "text": "AEC_Q100_Rev_H_Base_Document :\nIn TEST GROUP A - ACCELERATED ENVIRONMENT STRESS TESTS of Table 2: Qualification Test Methods, for the item where the STRESS in the first column is Temperature-Humidity-Bias or Biased HAST, its ABV is THB or HAST, # is A2, NOTES is P, B, D, G, SAMPLE SIZE / LOT is 77, NUMBER OF LOTS is 3, ACCEPT CRITERIA is 0 Fails, TEST METHOD is JEDEC JESD22-A101 or A110, and ADDITIONAL REQUIREMENTS is For surface mount devices, PC before THB (85°C/85%RH for 1000 hours) or HAST (130°C/85%RH for 96 hours, or 110°C/85%RH for 264 hours). TEST before and after THB or HAST at room and hot temperature."
+  },
+  {
+    "text": "In the AEC_Q100_Rev_H_Base_Document, Section 3.2.3 on 'Criteria for Passing Requalification' has been modified to provide clearer and more actionable guidance for the AEC-Q100 requalification process."
+  },
+  {
+    "text": "In the AEC_Q101_Rev_E_Base_Document file, Revision D, dated May 18, 2013, was a complete revision that changed the document title to reflect that stress test qualification requirements are failure mechanism based."
+  },
+  {
+    "text": "AEC_Q100_Rev_H_Base_Document :\nTable 2: Qualification Test Methods (continued), TEST GROUP D - DIE FABRICATION RELIABILITY TESTS includes table header fields: STRESS, ABV, #, NOTES, SAMPLE SIZE / LOT, NUMBER OF LOTS, ACCEPT CRITERIA, TEST METHOD, ADDITIONAL REQUIREMENTS"
+  },
+  {
+    "text": "In the AEC_Q101_Rev_E_Base_Document file, the benefits of applying qualification family guidelines are described. With proper attention to these guidelines, reliability information applicable to other parts in the family can be accumulated. This enables demonstration of generic family reliability and minimizes the need for extensive part-specific test programs."
+  },
+  {
+    "text": "AEC_Q101_Rev_E_Base_Document :\nTable 2: Qualification Test Methods (continued), TEST GROUP A - ACCELERATED ENVIRONMENT STRESS TESTS (continued), with table header fields: STRESS, ABV, #, DATA TYPE, NOTES, SAMPLE SIZE /LOT, NUMBER OF LOTS, ACCEPT CRITERIA, TEST METHOD, ADDITIONAL REQUIREMENTS"
+  },
+  {
+    "text": "AEC_Q100_Rev_H_Base_Document :\nTable 2: Qualification Test Methods (continued), TEST GROUP B - ACCELERATED LIFETIME SIMULATION TESTS, with table header fields: STRESS, ABV, #, NOTES, SAMPLE SIZE / LOT, NUMBER OF LOTS, ACCEPT CRITERIA, TEST METHOD, ADDITIONAL REQUIREMENTS"
+  },
+  {
+    "text": "In the AEC_Q101_Rev_E_Base_Document file, the 'Additional Requirements' column in Table 2 serves a dual purpose: it indicates which tests apply to a particular part type and highlights test requirements that supersede those described in the referenced test standard, providing critical application-specific guidance."
+  },
+  {
+    "text": "In the AEC_Q100_Rev_H_Base_Document file, the section on reference documents specifies that the current revisions of all referenced documents are effective at the date of agreement to the qualification plan, with subsequent plans automatically adopting updated revisions of these documents."
+  },
+  {
+    "text": "In the AEC_Q101_Rev_E_Base_Document file, the legend for Table 2 includes Note B, which states that when generic (family) data is provided instead of component-specific data, three lots of generic and/or part-specific data are required."
+  },
+  {
+    "text": "AEC_Q101_Rev_E_Base_Document :\nTable 2: Qualification Test Methods (continued), TEST GROUP C - PACKAGE ASSEMBLY INTEGRITY TESTS (continued), STRESS:Vibration Variable Frequency, ABV:VVF, #:C13, DATA TYPE:2, NOTES:D±G±H±(2), SAMPLE SIZE /LOT:Items C12 through C15 are sequential tests for hermetic packages. (See note H on Legend page.), NUMBER OF LOTS:Items C12 through C15 are sequential tests for hermetic packages. (See note H on Legend page.), ACCEPT CRITERIA:Items C12 through C15 are sequential tests for hermetic packages. (See note H on Legend page.), TEST METHOD:JEDEC JESD2-B-103, ADDITIONAL REQUIREMENTS:Use a constant displacement of 0.06 inches (double amplitude) over the range of 20Hz to 100 Hz and a 50g constant peak acceleration over the range of 100 Hz to 2 KHz. TEST before and after VVF."
+  },
+  {
+    "text": "In the AEC_Q101_Rev_E_Base_Document file, Section 1 SCOPE defines the document's purpose: to set minimum stress test-driven qualification requirements for discrete semiconductors, such as transistors and diodes, used in automotive applications."
+  },
+  {
+    "text": "In the AEC_Q101_Rev_E_Base_Document file, Section A7.2.1 discusses use lifetime and mission profile assumptions, clarifying that the provided examples are for demonstration only. It lists example lifetime characteristics such as service lifetime in years, engine on-time in hours, engine off/idle time, non-operating time, number of engine on-off cycles, and service mileage."
+  },
+  {
+    "text": "In the AEC_Q101_Rev_E_Base_Document file, changes requiring re-qualification must, at a minimum, involve performing the applicable tests from Table 2. Table 3 serves as a guide to determine the specific re-qualification test plan, including whether equivalent generic data can be submitted for certain tests instead of new specific test results."
+  },
+  {
+    "text": "In the AEC_Q101_Rev_E_Base_Document file, the inclusion of decommissioned tests like AEC-Q101-002 for the Machine Model ESD test is noted, reflecting the evolution and updating of test methodologies within the standard."
+  },
+  {
+    "text": "In the AEC_Q101_Rev_E_Base_Document file, the supplier must test a combination of the specific part and/or acceptable generic parts totaling a minimum of 3 lots with 77 pieces per lot to meet qualification sampling requirements."
+  },
+  {
+    "text": "In the AEC_Q101_Rev_E_Base_Document file, there is no time limit for generic data acceptability provided appropriate reliability data from the specific part or same qualification family is submitted, though process changes like die shrink can invalidate prior data."
+  },
+  {
+    "text": "In the AEC_Q100_Rev_H_Base_Document, Table 2 (Qualification Test Methods) shows significant revisions: Test A4 (Temperature Cycling) has its low-end temperature and minimum duration revised, includes a legacy temperature note, and removes the Grade 4 entry; Tests A6 and A7 (High Temperature Storage Life and Operating Life) add references to ambient (Ta) and junction (Tj) temperatures, with A7 also removing the 408-hour duration option."
+  },
+  {
+    "text": "AEC_Q100_Rev_H_Base_Document :\nTable 2: Qualification Test Methods (continued), TEST GROUP C - PACKAGE ASSEMBLY INTEGRITY TESTS, STRESS:Wire Bond Pull, ABV:WBP, #:C2, NOTES:H, P, D, G, SAMPLE SIZE / LOT:30 bonds from a minimum of 5 devices, NUMBER OF LOTS:30 bonds from a minimum of 5 devices, ACCEPT CRITERIA:CPK>1.67 or 0 Fails after TC (test #A4), TEST METHOD:MIL-STD883 Method 2011 AEC Q003, ADDITIONAL REQUIREMENTS:Condition C or D. For Au wire diameter ≥1mil, minimum pull strength after TC = 3 grams. For Au wire diameter <1mil, refer to Figure 2011-1 in MIL-STD-883 Method 2011 as a guideline for minimum pull strength. For Au wire diameter <1mil, wire bond pull shall be performed with the hook over the ball bond and not at mid-wire."
+  },
+  {
+    "text": "AEC_Q100_Rev_H_Base_Document :\nIn TEST GROUP E - ELECTRICAL VERIFICATION TESTS of Table 2: Qualification Test Methods (continued), for the item where the STRESS in the first column is Electrostatic Discharge Charged Device Model, its ABV is CDM, # is E3, NOTES is H, P, B, D, SAMPLE SIZE / LOT is See Test Method, NUMBER OF LOTS is 1, ACCEPT CRITERIA is Target: 0 Fails 750V corner pins, 500V all other pins (Classification C4B or better), TEST METHOD is AEC Q100-011, and ADDITIONAL REQUIREMENTS is TEST before and after ESD at room and hot temperature. Device shall be classified according to the maximum withstand voltage level. Device levels <750V corner pins and/or <500V all other pins CDM require specific user approval. Refer to Section 1.3.1."
+  },
+  {
+    "text": "In the AEC_Q101_Rev_E_Base_Document file, user approval for a process change is based on a contract between the Supplier and User, and is outside the document's scope. A change may not affect a part's operating temperature grade but could still impact its performance in a specific application, necessitating individual user authorization."
+  },
+  {
+    "text": "In the AEC_Q101_Rev_E_Base_Document file, the procedure for opening plastic packages to inspect wire bonds after temperature cycling involves using a suitable chemical etchant or plasma etcher to remove the plastic material. This process exposes critical features for inspection, including the die bond pad, the loop in the bond wire, the bond wire length, and the wire bond at the leadframe."
+  },
+  {
+    "text": "AEC_Q100_Rev_H_Base_Document :\nTable 2: Qualification Test Methods (continued), TEST GROUP D - DIE FABRICATION RELIABILITY TESTS (CONTINUED) includes table header fields: STRESS, ABV, #, NOTES, SAMPLE SIZE / LOT, NUMBER OF LOTS, ACCEPT CRITERIA, TEST METHOD, ADDITIONAL REQUIREMENTS"
+  },
+  {
+    "text": "In the AEC_Q101_Rev_E_Base_Document file, the document's legal and procedural framework is established through the NOTICE, which disclaims liability for patents and specifies that the material represents a sound approach from the automotive electronics system manufacturer's viewpoint."
+  },
+  {
+    "text": "In the AEC_Q100_Rev_H_Base_Document file, Electrostatic Discharge (ESD) testing is required for all products as a core qualification test, underscoring its universal applicability across device types."
+  },
+  {
+    "text": "AEC_Q101_Rev_E_Base_Document :\nIn TEST GROUP E - ELECTRICAL VERIFICATION TESTS of Table 2: Qualification Test Methods (continued), for the item where the STRESS in the first column is Short Circuit Characterization, its ABV is SC, # is E6, DATA TYPE is 3, NOTES is D⊥P, SAMPLE SIZE /LOT is 10, NUMBER OF LOTS is 3 Note B, ACCEPT CRITERIA is 0 Fails, TEST METHOD is AEC Q101-006, and ADDITIONAL REQUIREMENTS is For smart power parts only."
+  },
+  {
+    "text": "In the AEC_Q101_Rev_E_Base_Document file, the NOTICE states that conformance claims require meeting all document requirements and that inquiries should be directed to the AEC Technical Committee via http://www.aecouncil.com."
+  },
+  {
+    "text": "In the AEC_Q100_Rev_H_Base_Document file, Appendix 3 details the materials for package opening, specifying that various chemical strippers and acids can be used based on experience, with Red Fuming Nitric Acid noted as particularly effective for novolac type epoxies, provided they show low probability of damaging bond pad material."
+  },
+  {
+    "text": "In the AEC_Q100_Rev_H_Base_Document file, key attributes defining an assembly qualification family include Package Type (e.g., DIP, SOIC, PLCC), the worst case within the same package type (e.g., warpage from CTE mismatch), and the qualified range of paddle size for the die size/aspect ratio."
+  },
+  {
+    "text": "In the AEC_Q100_Rev_H_Base_Document, the SCOPE section cautions that these accelerated tests should not be used indiscriminately; each qualification project must be examined for potential new failure mechanisms, tests inducing non-application failures, or extreme use conditions reducing acceleration."
+  },
+  {
+    "text": "AEC_Q100_Rev_H_Base_Document :\nTable 2: Qualification Test Methods (continued), TEST GROUP C - PACKAGE ASSEMBLY INTEGRITY TESTS, STRESS:Solder Ball Shear, ABV:SBS, #:C5, NOTES:B, SAMPLE SIZE / LOT:5 balls from a min. of 10 devices, NUMBER OF LOTS:3, ACCEPT CRITERIA:CPK>1.67, TEST METHOD:AEC Q100-010 AEC Q003, ADDITIONAL REQUIREMENTS:PC thermally (two 220°C reflow cycles) before integrity (mechanical) testing. Refer to J-STD-020 for Pb-free reflow profiles to be used for this test."
+  },
+  {
+    "text": "In the AEC_Q100_Rev_H_Base_Document, the file acknowledges the collaborative effort behind its creation, recognizing significant contributors from Sustaining Members, Technical Members, Associate Members, Guest Members, and Other Contributors within the Automotive Electronics Council."
+  },
+  {
+    "text": "In the AEC_Q100_Rev_H_Base_Document file, Appendix 3 also mentions plasma strippers as an alternative method for removing plastic package material, indicating that various suitable plasma stripping equipment can be utilized for this purpose."
+  },
+  {
+    "text": "In the AEC_Q101_Rev_E_Base_Document file, the legend for Table 2 includes Note M, indicating that certain tests are required only for MOS and IGBT parts."
+  },
+  {
+    "text": "AEC_Q101_Rev_E_Base_Document :\nTable 2: Qualification Test Methods (continued), TEST GROUP E - ELECTRICAL VERIFICATION TESTS, STRESS:External Visual, ABV:EV, #:E0, DATA TYPE:1, NOTES:G⊥N, SAMPLE SIZE /LOT:All qualification parts submitted for testing, NUMBER OF LOTS:All qualification parts submitted for testing, ACCEPT CRITERIA:0 Fails, TEST METHOD:JEDEC JESD22-B101, ADDITIONAL REQUIREMENTS:Inspect part construction, marking and workmanship."
+  },
+  {
+    "text": "In the AEC_Q100_Rev_H_Base_Document file, the attachments include both active and decommissioned test methods, such as AEC-Q100-005 for Nonvolatile Memory Write/Erase Endurance and Data Retention testing, and the decommissioned AEC-Q100-003 for Machine Model ESD."
+  },
+  {
+    "text": "AEC_Q100_Rev_H_Base_Document :\nIn TEST GROUP D - DIE FABRICATION RELIABILITY TESTS (CONTINUED) of Table 2: Qualification Test Methods (continued), for the item where the STRESS in the first column is Negative Bias Temperature Instability, its ABV is NBTI, # is D4, NOTES is —, SAMPLE SIZE / LOT is —, NUMBER OF LOTS is —, ACCEPT CRITERIA is —, TEST METHOD is —, and ADDITIONAL REQUIREMENTS is The data, test method, calculations and internal criteria should be available to the user upon request for new technologies."
+  },
+  {
+    "text": "In the AEC_Q101_Rev_E_Base_Document file, the Acknowledgment section credits the AEC Q101 Sub-Committee Members for their contributions and dedicates the document in memoriam to Bob Knoell (1957-2018)."
+  },
+  {
+    "text": "AEC_Q100_Rev_H_Base_Document :\nIn TEST GROUP E - ELECTRICAL VERIFICATION TESTS (CONTINUED) of Table 2: Qualification Test Methods (continued), for the item where the STRESS in the first column is Electrical Distributions, its ABV is ED, # is E5, NOTES is H, P, B, D, SAMPLE SIZE / LOT is 30, NUMBER OF LOTS is 3, ACCEPT CRITERIA is Where applicable, CPK>1.67, TEST METHOD is AEC Q100-009 AEC Q003, and ADDITIONAL REQUIREMENTS is Supplier and user to mutually agree upon electrical parameters to be measured and accept criteria. TEST at room, hot, and cold temperature."
+  },
+  {
+    "text": "AEC_Q101_Rev_E_Base_Document :\nTable 2: Qualification Test Methods (continued), TEST GROUP D - DIE FABRICATION RELIABILITY TESTS, STRESS:Dielectric Integrity, ABV:DI, #:D1, DATA TYPE:3, NOTES:D±M, SAMPLE SIZE /LOT:5, NUMBER OF LOTS:1, ACCEPT CRITERIA:0 Fails, TEST METHOD:AEC Q101-004 Section 3, ADDITIONAL REQUIREMENTS:All parts must exceed gate breakdown voltage minimum (Power MOS & IGBT only). Also required for Pre- & Post-process change comparison to evaluate process change robustness related to the dielectric material per Table 3 guidelines for test D1."
+  },
+  {
+    "text": "In the AEC_Q100_Rev_H_Base_Document file, the Assembly Process for plastic and ceramic packages must be qualified separately; devices within a qualification family must share identical major process and material elements, and family requalification is required upon any process or material change."
+  },
+  {
+    "text": "AEC_Q100_Rev_H_Base_Document :\nIn TEST GROUP A - ACCELERATED ENVIRONMENT STRESS TESTS of Table 2: Qualification Test Methods, for the item where the STRESS in the first column is Autoclave or Unbiased HAST or Temperature-Humidity (without Bias), its ABV is AC or UHST or TH, # is A3, NOTES is P, B, D, G, SAMPLE SIZE / LOT is 77, NUMBER OF LOTS is 3, ACCEPT CRITERIA is 0 Fails, TEST METHOD is JEDEC JESD22-A102, A118, or A101, and ADDITIONAL REQUIREMENTS is For surface mount devices, PC before AC (121°C/15psig for 96 hours) or unbiased HAST (130°C/85%RH for 96 hours, or 110°C/85%RH for 264 hours). For packages sensitive to high temperatures and pressure (e.g., BGA), PC followed by TH (85°C/85%RH) for 1000 hours may be substituted. TEST before and after AC, UHST, or TH at room temperature."
+  },
+  {
+    "text": "AEC_Q100_Rev_H_Base_Document :\nTable 2: Qualification Test Methods (continued), TEST GROUP C - PACKAGE ASSEMBLY INTEGRITY TESTS, with table header fields: STRESS, ABV, #, NOTES, SAMPLE SIZE / LOT, NUMBER OF LOTS, ACCEPT CRITERIA, TEST METHOD, ADDITIONAL REQUIREMENTS"
+  },
+  {
+    "text": "In the AEC_Q100_Rev_H_Base_Document file, a mission profile is generated by augmenting lifetime characteristics with detailed information on thermal, electrical, and mechanical loading conditions under actual use."
+  },
+  {
+    "text": "AEC_Q101_Rev_E_Base_Document :\nTable 2: Qualification Test Methods (continued), TEST GROUP C - PACKAGE ASSEMBLY INTEGRITY TESTS, STRESS:Thermal Resistance, ABV:TR, #:C9, DATA TYPE:3, NOTES:D⊥G, SAMPLE SIZE /LOT:10, NUMBER OF LOTS:1, ACCEPT CRITERIA:0 Fails, TEST METHOD:JEDEC JESD24-3, 24-4, 24-6 as appropriate, ADDITIONAL REQUIREMENTS:Also required for Pre- & Post-process change comparison to evaluate process change robustness per Table 3 guidelines for test C9. Measure TR to assure specification compliance and provide process change comparison data."
+  },
+  {
+    "text": "AEC_Q101_Rev_E_Base_Document :\nIn TEST GROUP A - ACCELERATED ENVIRONMENT STRESS TESTS of Table 2: Qualification Test Methods, for the item where the STRESS in the first column is High Humidity High Temp. Reverse Bias, its ABV is H3TRB, # is A2alt, DATA TYPE is 1, NOTES is D_G1U_V_3, SAMPLE SIZE /LOT is 77, NUMBER OF LOTS is 3 Note B, ACCEPT CRITERIA is 0 Fails, TEST METHOD is JEDEC JESD22-A-101, and ADDITIONAL REQUIREMENTS is 1000 hours at TA=85°C/85% RH with part reverse biased at 80% of rated breakdown voltage up to a maximum of 100V or limit of chamber. TEST before and after H3TRB as a minimum."
+  },
+  {
+    "text": "AEC_Q101_Rev_E_Base_Document :\nTable 2: Qualification Test Methods, TEST GROUP A - ACCELERATED ENVIRONMENT STRESS TESTS, STRESS:Unbiased HAST, ABV:UHAST, #:A3, DATA TYPE:1, NOTES:D_G1U, SAMPLE SIZE /LOT:77, NUMBER OF LOTS:3 Note B, ACCEPT CRITERIA:0 Fails, TEST METHOD:JEDEC JESD22-A-118, or A101, ADDITIONAL REQUIREMENTS:96 hours at TA=130°C/85%RH or 264 hours at TA=110°C/85%RH. TEST before and after UHAST."
+  },
+  {
+    "text": "In the AEC_Q100_Rev_H_Base_Document file, Section 1.3.1 on AEC Q100 Qualification was amended to recommend that the passing ESD voltage level be specified in the supplier datasheet, including footnotes for any pin exceptions."
+  },
+  {
+    "text": "AEC_Q100_Rev_H_Base_Document :\nTable 2: Qualification Test Methods (continued), TEST GROUP E - ELECTRICAL VERIFICATION TESTS (CONTINUED), with table header fields: STRESS, ABV, #, NOTES, SAMPLE SIZE / LOT, NUMBER OF LOTS, ACCEPT CRITERIA, TEST METHOD, ADDITIONAL REQUIREMENTS"
+  },
+  {
+    "text": "In the AEC_Q100_Rev_H_Base_Document file, Pressure Pot testing typically uses an Aluminum chamber, with key controls including chamber wall temperature, air purging procedure at boiling water, and careful management of ramp-up/down and overall temperature and pressure."
+  },
+  {
+    "text": "AEC_Q101_Rev_E_Base_Document :\nTable 2: Qualification Test Methods (continued), TEST GROUP C - PACKAGE ASSEMBLY INTEGRITY TESTS, STRESS:Die Shear, ABV:DS, #:C5, DATA TYPE:3, NOTES:D⊥G, SAMPLE SIZE /LOT:5, NUMBER OF LOTS:1, ACCEPT CRITERIA:0 Fails, TEST METHOD:MIL-STD-750-2 Method 2017, ADDITIONAL REQUIREMENTS:Also required for Pre- & Post-process change comparison to evaluate process change robustness related to die attach per Table 3 guidelines for test C5."
+  },
+  {
+    "text": "In the AEC_Q100_Rev_H_Base_Document file, the plan must include targeted start and finish dates for all tests and their respective end-points, ensuring a clear schedule for the entire qualification process."
+  },
+  {
+    "text": "In the AEC_Q101_Rev_E_Base_Document file, a critical rule regarding qualification validity is stated. For a part to be considered qualified per the AEC-Q101 specification, neither the purchase order nor the individual part specification is permitted to waive or detract from any of the requirements stipulated within the AEC-Q101 document itself."
+  },
+  {
+    "text": "In the AEC_Q100_Rev_H_Base_Document file, the method in A7.3 is for detailed reliability assessment when an application has demanding loading, extended service life, or a more stringent failure rate target, potentially requiring extended test durations."
+  },
+  {
+    "text": "In the AEC_Q101_Rev_E_Base_Document file, note P provides guidance for Smart Power parts, suggesting consideration for applying the test or substituting it with an equivalent Q100 test based on factors like die logic/sensing content, user application, switching speed, power dissipation, and pin count."
+  },
+  {
+    "text": "In the AEC_Q101_Rev_E_Base_Document file, the AEC-Q101-004 miscellaneous test methods are referenced, which include Unclamped Inductive Switching, Dielectric Integrity, and Destructive Physical Analysis as key test categories for discrete semiconductors."
+  },
+  {
+    "text": "AEC_Q101_Rev_E_Base_Document :\nIn TEST GROUP C - PACKAGE ASSEMBLY INTEGRITY TESTS (continued) of Table 2: Qualification Test Methods (continued), for the item where the STRESS in the first column is Mechanical Shock, its ABV is MS, # is C14, DATA TYPE is 2, NOTES is D±G±H±(3), SAMPLE SIZE /LOT is Items C12 through C15 are sequential tests for hermetic packages. (See note H on Legend page.), NUMBER OF LOTS is Items C12 through C15 are sequential tests for hermetic packages. (See note H on Legend page.), ACCEPT CRITERIA is Items C12 through C15 are sequential tests for hermetic packages. (See note H on Legend page.), TEST METHOD is JEDEC JESD22-B-104, and ADDITIONAL REQUIREMENTS is 1500 g's for 0.5mS, 5 blows, 3 orientations. TEST before and after MS."
+  },
+  {
+    "text": "AEC_Q101_Rev_E_Base_Document :\nIn TEST GROUP D - DIE FABRICATION RELIABILITY TESTS of Table 2: Qualification Test Methods (continued), for the item where the STRESS in the first column is Dielectric Integrity, its ABV is DI, # is D1, DATA TYPE is 3, NOTES is D±M, SAMPLE SIZE /LOT is 5, NUMBER OF LOTS is 1, ACCEPT CRITERIA is 0 Fails, TEST METHOD is AEC Q101-004 Section 3, and ADDITIONAL REQUIREMENTS is All parts must exceed gate breakdown voltage minimum (Power MOS & IGBT only). Also required for Pre- & Post-process change comparison to evaluate process change robustness related to the dielectric material per Table 3 guidelines for test D1."
+  },
+  {
+    "text": "AEC_Q100_Rev_H_Base_Document :\nTable 2: Qualification Test Methods (continued), TEST GROUP A - ACCELERATED ENVIRONMENT STRESS TESTS (CONTINUED) includes table header fields: STRESS, ABV, #, NOTES, SAMPLE SIZE / LOT, NUMBER OF LOTS, ACCEPT CRITERIA, TEST METHOD, ADDITIONAL REQUIREMENTS"
+  },
+  {
+    "text": "In the AEC_Q100_Rev_H_Base_Document file, specified wearout failure mechanisms include Electromigration, Time-Dependent Dielectric Breakdown (or Gate Oxide Integrity Test) for all MOS technologies, and Hot Carrier Injection for all MOS technologies below 1 micron."
+  },
+  {
+    "text": "In the AEC_Q100_Rev_H_Base_Document file, the sample size of 231 devices corresponds to a specific statistical reliability metric, representing an LTPD (Lot Tolerance Percent Defective) with a defined maximum failure rate at a 90% confidence level."
+  },
+  {
+    "text": "In the AEC_Q101_Rev_E_Base_Document file, Appendix 5 specifies minimum parametric test requirements for Table 1 Test E1 (Pre- & Post-Stress Electrical Test). For transistors, the required parameters include BVCEX, ICEX, IEBX or ICBX, VCE(SAT), and hFE."
+  },
+  {
+    "text": "In the AEC_Q100_Rev_H_Base_Document file, for BiCMOS devices, data must be taken from the appropriate technology based on the circuit under consideration, and 'worst case' family requalification with appropriate tests is required when the process or a material is changed."
+  },
+  {
+    "text": "In the AEC_Q101_Rev_E_Base_Document file, the document's accessibility is noted: it may be downloaded free of charge, but by downloading, the individual agrees not to charge for or resell the material, and it is printed in the U.S.A. with all rights reserved."
+  },
+  {
+    "text": "In the AEC_Q100_Rev_H_Base_Document file, A7.1.2 References cites key industry standards including SAE J1879/J1211/ZVEI Handbook and JEDEC JEP122 for robustness validation and failure mechanism models."
+  },
+  {
+    "text": "In the AEC_Q101_Rev_E_Base_Document file, Revision E added new sections A7.2.2 and A7.3, as well as Figure 2, to the document structure."
+  },
+  {
+    "text": "In the AEC_Q100_Rev_H_Base_Document file, Appendix 3 concludes the procedure with an inspection requirement: using suitable magnification to check if the bond pad metallization has been attacked during package removal; pads with missing metallization are degraded and cannot be used for testing, while unaffected pads are suitable."
+  },
+  {
+    "text": "In the AEC_Q100_Rev_H_Base_Document file, the concept of 'Zero Defects' is introduced within the context of qualification, noting that qualification and other aspects of the document represent a subset of a broader quality framework aimed at minimizing defects."
+  },
+  {
+    "text": "AEC_Q100_Rev_H_Base_Document :\nIn TEST GROUP D - DIE FABRICATION RELIABILITY TESTS (CONTINUED) of Table 2: Qualification Test Methods (continued), for the item where the STRESS in the first column is Hot Carrier Injection, its ABV is HCI, # is D3, NOTES is —, SAMPLE SIZE / LOT is —, NUMBER OF LOTS is —, ACCEPT CRITERIA is —, TEST METHOD is —, and ADDITIONAL REQUIREMENTS is The data, test method, calculations and internal criteria should be available to the user upon request for new technologies."
+  },
+  {
+    "text": "In the AEC_Q101_Rev_E_Base_Document file, the use of generic family data for qualification requires a review of other parts in the same family to ensure no common failure mechanisms exist. The supplier must provide justification for using such data, and it must be approved by the user, adding a layer of risk mitigation."
+  },
+  {
+    "text": "AEC_Q100_Rev_H_Base_Document :\nTable 2: Qualification Test Methods (continued), TEST GROUP F - DEFECT SCREENING TESTS, STRESS:Statistical Bin/Yield Analysis, ABV:SBA, #:F2, NOTES:—, SAMPLE SIZE / LOT:—, NUMBER OF LOTS:—, ACCEPT CRITERIA:—, TEST METHOD:AEC Q002, ADDITIONAL REQUIREMENTS:The supplier determines the sample sizes and accept criteria per the test methods. If these tests are not possible for a given part, the supplier must provide justification. The supplier determines the sample sizes and accept criteria per the test methods. If these tests are not possible for a given part, the supplier must provide justification. The supplier must perform some variant of PAT and SBA that meets the intent of the guideline."
+  },
+  {
+    "text": "In the AEC_Q101_Rev_E_Base_Document file, re-qualification of a part is mandated when a supplier makes a change to the product or process that impacts or could potentially impact the part's form, fit, function, quality, or reliability. Guidelines for such changes are provided in Table 3, establishing the fundamental trigger for the re-qualification process."
+  },
+  {
+    "text": "In the AEC_Q100_Rev_H_Base_Document, the SCOPE clarifies that using this document does not relieve the IC supplier of their internal qualification program responsibilities, defines 'user' as all customers using a device qualified per this spec, and encourages suppliers to use stated device temperature grades in part information."
+  },
+  {
+    "text": "In the AEC_Q100_Rev_H_Base_Document file, Wearout Reliability Tests must be available to the user when qualifying a new technology or material relevant to failure mechanisms, though the full demonstration is not required for every new device qualification."
+  },
+  {
+    "text": "In the AEC_Q101_Rev_E_Base_Document file, the qualification scope for discrete products delivered in bare die or wafer form is addressed. Such products are still qualified to the Q101 standard, but they must use appropriate carriers or surrogate packages during the qualification testing process to facilitate evaluation."
+  },
+  {
+    "text": "In the AEC_Q101_Rev_E_Base_Document file, Appendix 6 notes that for small packages, mounting the part may be necessary during the opening process to maintain the structural integrity of the package for subsequent wire pull testing."
+  },
+  {
+    "text": "AEC_Q100_Rev_H_Base_Document :\nIn TEST GROUP D - DIE FABRICATION RELIABILITY TESTS of Table 2: Qualification Test Methods (continued), for the item where the STRESS in the first column is Electromigration, its ABV is EM, # is D1, NOTES is —, SAMPLE SIZE / LOT is —, NUMBER OF LOTS is —, ACCEPT CRITERIA is —, TEST METHOD is —, and ADDITIONAL REQUIREMENTS is The data, test method, calculations and internal criteria should be available to the user upon request for new technologies."
+  },
+  {
+    "text": "In the AEC_Q101_Rev_E_Base_Document file, an illustrative FAB family example comprises Gold-doped fast efficient rectifiers with NiAu metallization, including specific parts: a 1A/200V/50mil² axial-lead, a 3A/100V/100mil² surface mount, and a 30A/600V/135mil² TO-247 through-hole device."
+  },
+  {
+    "text": "In the AEC_Q100_Rev_H_Base_Document file, Appendix 1 defines a Product Qualification Family guideline, allowing use of generic data to streamline qualification when devices share the same major product, process, and materials elements as defined in subsequent sections."
+  },
+  {
+    "text": "In the AEC_Q100_Rev_H_Base_Document file, additional wearout reliability tests listed are Negative Bias Temperature Instability and Stress Migration, covering key semiconductor device degradation modes."
+  },
+  {
+    "text": "In the AEC_Q100_Rev_H_Base_Document file, for each test, the number of failures and the total number of devices tested must be quantified and reported as part of the reliability results."
+  },
+  {
+    "text": "In the AEC_Q100_Rev_H_Base_Document file, the appendix defines a Product Qualification Family as a guideline for using generic data to accelerate the qualification process, requiring mutual agreement between suppliers and customers on its appropriate application."
+  }
+]
