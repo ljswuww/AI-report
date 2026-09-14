@@ -1,0 +1,17 @@
+AEC-Q Test Report Auditing Example of Our  Model
+Input_text:
+“Test Item: Wire Bond Shear (WBS), Applicable Standard: AEC-Q100-001 / AEC-Q003, Sample Number: 1 lot, 30 bond points taken from 4 devices; the test was conducted in accordance with standard requirements and the Process Capability Index (Cpk) was calculated, and the test result shows Cpk=2.2＞1.67 with 0 failure, which meets the standard requirements.”
+
+Model_output:
+<reasoning> 
+[Domain Knowledge Comparison]According to the given professional domain requirements, the specified sample size standard is 30 bond points taken from a minimum of 5 devices, while the input text incorrectly writes 4 devices, which does not conform to AEC-Q industry sampling specifications. 
+</reasoning> 
+<error_position> 
+1 lot, 30 bond points taken from 4 devices 
+</error_position> 
+<specific_error_reason> 
+AEC-Q standard requires 30 bond points collected from at least 5 devices, the text wrongly writes 4 devices.
+</specific_error_reason> 
+<corrected_text> 
+Test Item: Wire Bond Shear (WBS), Applicable Standard: AEC-Q100-001 / AEC-Q003, Sample Number: 1 lot, 30 bond points taken from 5 devices; the test was conducted in accordance with standard requirements and the Process Capability Index (Cpk) was calculated, and the test result shows Cpk=2.2＞1.67 with 0 failure, which meets the standard requirements. 
+</corrected_text>
