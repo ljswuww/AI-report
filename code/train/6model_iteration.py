@@ -66,7 +66,7 @@ AUGMENTED_SEED_PATH = override(
     "6it.AUGMENTED_SEED_PATH", "../../data/train/Hard_samples/augmented_hard_samples.json")
 REPORT_PATH = f"{OUTPUT_DIR}/iteration_report.json"
 
-# Closed-loop settings (paper Sec. IV-C / III-F)
+# Closed-loop settings 
 MAX_ITERATIONS = 3              # "total iterations = 3"
 CONVERGENCE_TOL = 0.03          # validation mixed reward fluctuation < 3%
 CONVERGENCE_PATIENCE = 2        # ...for two consecutive rounds
