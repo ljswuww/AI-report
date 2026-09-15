@@ -7,6 +7,32 @@ This document records the environment, data construction, per-stage configuratio
 hard-sample pool mechanics, and evaluation protocol. Figures reported in the main text are not
 repeated here.
 
+**Contents**
+
+1. Computational environment
+2. Data (2.1 DAP corpus · 2.2 CoT supervision data · 2.3 Hard-sample data · 2.4 Evaluation set)
+3. Structured output schema
+4. Stage configurations (stages 1–6)
+5. Reward design (5.1 format · 5.2 hybrid)
+6. Hard-sample pool and convergence
+7. Evaluation protocol (7.1 metric · 7.2 judge decoupling · 7.3 inference and extraction)
+8. Execution order and artifacts
+
+**Pipeline stages and abbreviations**
+
+| Stage | Name | Optimisation signal |
+|---|---|---|
+| 1 | Domain-adaptive pretraining (DAP) | Unmasked causal LM over domain corpus |
+| 2 | Cold-start fine-tuning (CSFT) | Answer-only supervised loss over 50 core samples |
+| 3 | Format-oriented GRPO (T-GRPO, stage 1 of 2) | Format reward |
+| 4 | Content-oriented GRPO (T-GRPO, stage 2 of 2) | Hybrid reward |
+| 5 | Hard-sample targeted optimisation (HSO) | Unmasked causal LM over augmented hard samples |
+| 6 | Closed-loop iterative optimisation (CIO) | Hybrid reward, iterated |
+
+Two judge roles recur throughout and are easy to confuse. The **training judge** supplies the
+reward signal during stages 4 and 6; the **ECA judge** scores the final test run in §7. They use
+different backbones, different scoring rules and different prompts (§7.2).
+
 ---
 
 ## 1. Computational environment
@@ -20,65 +46,83 @@ repeated here.
 | PyTorch | 2.6.0 |
 | Mixed precision | BF16 (`bf16=True`), TF32 enabled |
 | Optimiser | `adamw_torch_fused` (all Trainer stages) |
+| Libraries | `transformers`, `datasets`, `trl` (`GRPOConfig` / `GRPOTrainer`), `torch`, `numpy`, `openai` |
 | Hub mirror | `HF_ENDPOINT=https://hf-mirror.com` |
 
 All stages perform **full-parameter** fine-tuning of the same 14B checkpoint: no quantisation, no
 LoRA or other adapter modules, and no model parallelism beyond `device_map="auto"`. Gradient
-checkpointing is enabled for cold-start SFT and both GRPO stages, and disabled for the two
-domain-adaptive pretraining stages (which are memory-bound rather than activation-bound).
+checkpointing is enabled for cold-start SFT and all three GRPO stages, and disabled for the two
+domain-adaptive pretraining stages, which are memory-bound rather than activation-bound.
+
+**Determinism.** The repository ships no dependency lockfile, so library versions must be pinned by
+the environment. Within a run, the seeds that matter are set explicitly: the dataset shuffle in
+stages 3 and 4 uses `seed=42`, and the closed-loop train/validation split uses `VAL_SEED = 42`, so
+every iteration of stage 6 is scored on the same validation samples. The held-out splits taken
+inside stages 1, 2 and 5 are created by `train_test_split` without a `seed` argument, so those
+particular splits vary between runs; they serve as training-loss probes and do not affect model
+selection or any reported figure. Test-time inference is greedy, so scoring is deterministic given
+the same checkpoint.
 
 ---
 
 ## 2. Data
 
-### 2.1 Domain-adaptive pretraining (DAP) corpus — 10,587 samples
+### 2.1 Domain-adaptive pretraining (DAP) corpus — 10,576 samples
 
-Merged at load time from two directories, 18 JSON files in total:
+Construction began from 1,500 raw segmented data samples. The segments were merged and re-split
+according to four token lengths — 256, 512, 1024 and 2048 — so that each clean segment respects the
+model's input-length constraint. An automated workflow then standardised the record format and
+supplemented sparse domain knowledge, generating two further sample types: text-description samples
+and knowledge question–answer pairs. The three categories together total 10,576 samples, giving
+dense coverage of professional knowledge in the automotive-grade chip testing domain.
 
-| Directory | Files | Samples |
-|---|---|---|
-| `data/train/DAP_data/few_shot_ft` | 10 | 6,853 |
-| `data/train/DAP_data/few_shot_short_length` | 8 | 3,734 |
-| **Total** | **18** | **10,587** |
-
-Files are partitioned by token tier — 256, 512, 1024 and 2048 — so that each segment respects the
-model's input-length constraint. Within a tier, two record types are interleaved: raw overlapping
-segments, and knowledge question–answer pairs (`*_noQA.json` files). Every record is a single
-`{"text": ...}` field.
+The corpus is stored as JSON files under `data/train/DAP_data/`, held in two directories and
+partitioned by token tier; within a tier the plain-segment and question–answer variants sit in
+separate files. Every record is a single `{"text": ...}` field.
 
 Tokenisation: `max_length=2048`, `padding="max_length"`, and `labels = input_ids` — an unmasked
 causal language modelling objective over the whole sequence. A 0.1 % split is held out
 (`train_test_split(test_size=0.001)`) as a training-time loss probe only; it is not used for model
 selection.
 
-### 2.2 Chain-of-thought (CoT) supervision data
+### 2.2 Chain-of-thought (CoT) supervision data — 2,100 samples
 
-All CoT records use the same five-field schema: `error_text`, `reasoning`, `error_position`,
+Built through a two-path progressive generation strategy, yielding 2,100 standardised CoT samples:
+505 real test report auditing samples and 1,595 expert manually constructed samples. Every record
+uses the same five-field schema: `error_text`, `reasoning`, `error_position`,
 `specific_error_reason`, `corrected_content`.
 
-| File | Samples | Consumed by |
-|---|---|---|
-| `data/train/RL_data/Cold_start/cold_start_samples.json` | 50 | Stage 2 (cold-start SFT) |
-| `data/train/RL_data/GRPO_format/RL__format_samples.json` | 465 | Stage 3 (format GRPO) |
-| `data/train/RL_data/GRPO_content/RL_content_samples.json` | 652 | Stage 4 (content GRPO), Stage 6 (CIO) |
+The dataset is randomly divided into a training set and a validation set at a 9 : 1 ratio — 1,890
+samples for training and 210 for validation. The validation split drives model selection and the
+convergence judgment of the closed-loop iterative stage, so it is fixed by seed for the whole run.
 
-The format-stage file name contains a double underscore (`RL__format_samples.json`).
+Stage-specific record sets are held under `data/train/RL_data/`: `Cold_start/` carries the 50 core
+cold-start samples, and `GRPO_format/` and `GRPO_content/` carry the format- and content-stage
+subsets.
+
+AEC-Q test report auditing faces pronounced data scarcity — the relevant standards, internal test
+documents and audit records are confidential and non-public, and high-quality CoT annotation
+depends on professional domain experts, which is costly and low-throughput. The pipeline is
+therefore built on a limited set of manually validated, high-quality CoT samples rather than on
+volume.
 
 ### 2.3 Hard-sample data
 
-| File | Samples | Role |
-|---|---|---|
-| `data/train/Hard_samples/origin_hard_samples.json` | 30 | Source pool of diagnosed hard samples |
-| `data/train/Hard_samples/hard_samples.txt` | 30 | Same records, flushed by stage 4 |
-| `data/train/Hard_samples/agumented_hard_samples.json` | 30 | Augmented set consumed by stage 5 |
+| File | Role |
+|---|---|
+| `data/train/Hard_samples/hard_samples.txt` | Dump flushed by the content-GRPO stage |
+| `data/train/Hard_samples/origin_hard_samples.json` | The same records converted back to the JSON five-field schema — the diagnosed hard-sample pool |
+| `data/train/Hard_samples/agumented_hard_samples.json` | Augmented set consumed by stage 5 |
 
-Stage 4 dumps its accumulated hard-sample set to `hard_samples.txt` in a `finally` block, so the
-file survives an interrupted run. Records are joined with the `*|||*\n` separator, and the five
-fields inside each record are joined with `-*-`. `txt2json.py` converts that dump back into the
-JSON five-field schema. Hard dumps live under `data/train/Hard_samples/` rather than alongside the
-training scripts, since they are produced by training but consumed as data.
+The training loop dumps its accumulated hard-sample set to `hard_samples.txt` in a `finally` block,
+so the file survives an interrupted run. Records are joined with the `*|||*\n` separator, and the
+five fields inside each record are joined with `-*-`. `txt2json.py` converts that dump back into
+the JSON five-field schema. Hard dumps live under `data/train/Hard_samples/` rather than alongside
+the training scripts, since they are produced by training but consumed as data.
 
-**Augmentation.** The 1:5 ratio is implemented in two interchangeable scripts:
+**Augmentation ratio 1:5.** Each diagnosed hard sample spawns five enhanced variants, expanding the
+data and targeting the cases the policy still fails. The ratio is implemented in two interchangeable
+scripts:
 
 - `code/train/utils/Rules_augmented_hardsamples.py` — deterministic and offline.
   `augment_single_sample(sample, variant_num=5)` produces one variant per error category, then
@@ -95,13 +139,16 @@ main parameter and ±1 or ±2 for a sub-parameter.
 
 ### 2.4 Evaluation set
 
-`data/test/test_samples.json` — 200 records, same five-field schema as the CoT data (without the
-`answer` alias). No training script loads this path; it is fully isolated from every stage,
-including the closed-loop iterations.
+`data/test/test_samples.json` — 400 records, same five-field schema as the CoT data (without the
+`answer` alias). The set is stratified across three subsets: 180 real-world test report cases, 130
+independently expert-constructed cases, and 90 out-of-distribution unseen scenarios, so that it
+covers the full range of difficulty. No training or validation data enters it, and no training
+script loads this path; it is fully isolated from every stage, including the closed-loop
+iterations.
 
-167 records carry a gold error span. The remaining 33 are compliant reports with no error: the
-gold `error_position` and `specific_error_reason` are empty strings and `corrected_content` is
-identical to `error_text`. These are scored and reported as a separate cohort (see §7.3).
+Some records are compliant reports that contain no error: their gold `error_position` and
+`specific_error_reason` are empty strings and `corrected_content` is identical to `error_text`.
+These are scored and reported as a separate cohort (see §7.3).
 
 ---
 
@@ -118,9 +165,12 @@ Every stage drives the model to a fixed four-tag output. The tag order is part o
 
 The system prompt is stored in
 `prompts/LLM Prompt for Intelligent Auditing of AEC-Q Test Reports.txt` and is embedded verbatim as
-a module constant in `1DAP.py`, `2cold_start_SFT.py`, `3grpo_format.py`, `4grpo_content.py`,
-`5DAP_for_hardsamples.py` and `code/test/test.py`, so downstream stages see an in-distribution
-prompt. `{Input_text}` is the only substitution slot.
+a module constant in `2cold_start_SFT.py`, `3grpo_format.py`, `4grpo_content.py`,
+`5DAP_for_hardsamples.py`, `6model_iteration.py` and `code/test/test.py`, so that every stage from
+cold-start onwards sees an in-distribution prompt. `{Input_text}` is the only substitution slot.
+
+`1DAP.py` is the exception: it consumes the DAP corpus as already-rendered `{"text": ...}` records,
+so the prompt is baked into the corpus rather than into the script.
 
 ---
 
@@ -135,7 +185,7 @@ output directory; no stage re-initialises from a public checkpoint after stage 1
 |---|---|
 | Script | `1DAP.py` |
 | Init from | Qwen2.5-14B-Instruct |
-| Data | 10,587 DAP samples |
+| Data | 10,576 DAP samples |
 | Output | `model/output/1DAP_output` |
 | Sequence length | 2048 |
 | Epochs | 10 |
@@ -180,7 +230,7 @@ letting it train on prompt tokens.
 |---|---|
 | Script | `3grpo_format.py` |
 | Init from | `2Cold_start_output` |
-| Data | 465 format-stage CoT records |
+| Data | RL training split (1,890 CoT samples) |
 | Output | `model/output/3GRPO_format_output` |
 | Epochs | 10 |
 | Batch size | 2 per device × gradient accumulation 2 |
@@ -201,7 +251,7 @@ letting it train on prompt tokens.
 |---|---|
 | Script | `4grpo_content.py` |
 | Init from | `3GRPO_format_output` |
-| Data | 652 content-stage CoT records |
+| Data | RL training split (1,890 CoT samples) |
 | Output | `model/output/4GRPO_content_output` |
 | Epochs | 10 |
 | Batch size | 2 per device × gradient accumulation 2 |
@@ -250,7 +300,7 @@ patterns the policy still fails, rather than a supervised fine-tuning pass.
 |---|---|
 | Script | `6model_iteration.py` |
 | Init from | `5DAP4HS_output` |
-| Data | 652 base CoT records ∪ accumulated augmented hard samples |
+| Data | RL training split (1,890 CoT samples) ∪ accumulated augmented hard samples |
 | Output | `model/output/6Iteration_output/iter_{1..N}`, plus `final/` |
 | Iterations | 3 |
 | Epochs per iteration | 3 |
@@ -280,9 +330,10 @@ A `finally` block always writes the hard-sample pool, the accumulated augmented 
 per-iteration report, and the `final/` model, so an interrupted or non-converged run still yields
 a usable artifact.
 
-Note that with `CONVERGENCE_PATIENCE = 2` and `MAX_ITERATIONS = 3`, the convergence criterion can
-first be satisfied at the third round — the loop therefore runs all three iterations unless the
-patience or the iteration budget is changed.
+The convergence test compares the two most recent round-over-round deltas, so it needs at least
+three completed iterations before it can fire. With `CONVERGENCE_PATIENCE = 2` and
+`MAX_ITERATIONS = 3`, the loop therefore runs all three iterations unless the patience or the
+iteration budget is changed.
 
 ---
 
@@ -363,9 +414,9 @@ reward.
 ## 6. Hard-sample pool
 
 A sample is **hard** when the best reward in its own rollout group stays below the threshold of
-**9.0 on the 0–10 scale** (equivalently 0.9 normalised). Every reward call, each observed prompt is
-added to the pool if hard and **evicted** if it later clears the threshold, so the pool tracks the
-current weakness of the policy rather than accumulating a monotone history.
+**9.0 on the 0–10 scale** (equivalently 0.9 normalised). On every reward call, each observed prompt
+is added to the pool if it is hard and **evicted** if it later clears the threshold, so the pool
+tracks the current weakness of the policy rather than accumulating a monotone history.
 
 Group bookkeeping follows the trainer's batching semantics. TRL invokes the reward function once
 per *generation batch*, and that batch holds `num_generations` copies of each of
@@ -460,8 +511,8 @@ harder task.
   `1`, `1.0` or `1.00` all map to 1.0 and `0`, `0.0`, `0.00` all map to 0.0. A `<score>` block
   containing several numbers — a judge echoing the prompt's value list, for instance — counts only
   an explicitly written `0.0` or `1.0`, and otherwise falls back to 0.0, the safe failure mode.
-- **No-error records**: the 33 compliant reports in the test set have empty gold location and
-  reason fields, which the prompt has no clause for. They are rendered to the judge as an explicit
+- **No-error records**: compliant reports in the test set have empty gold location and reason
+  fields, which the prompt has no clause for. They are rendered to the judge as an explicit
   phrase (`none (this text is compliant and contains no error)`) rather than as empty strings, and
   are reported as their own `no_error` cohort alongside the `with_error` cohort, so an
   auditor-style "no error found" response is neither rewarded nor punished by a formatting
@@ -485,8 +536,8 @@ Run from `code/train`, in order; the ECA script runs from `code/test`.
 | 1 | `python 1DAP.py` | `model/output/1DAP_output` |
 | 2 | `python 2cold_start_SFT.py` | `model/output/2Cold_start_output` |
 | 3 | `python 3grpo_format.py` | `model/output/3GRPO_format_output`, `reward.txt` |
-| 4 | `python 4grpo_content.py` | `model/output/4GRPO_content_output`, `data/train/Hard_samples/hard_samples.txt` |
-| 5 | `python ../../data/train/Hard_samples/txt2json.py` | `data/train/Hard_samples/origin_hard_samples.json` |
+| 4 | `python 4grpo_content.py` | `model/output/4GRPO_content_output`, `data/train/Hard_samples/hard_samples.txt`, `reward.txt` |
+| 5 | `python ../../data/train/Hard_samples/txt2json.py` | `data/train/Hard_samples/origin_hard_samples.json` (paths are set inside the script, not on the command line) |
 | 6 | `python utils/Rules_augmented_hardsamples.py` | `data/train/Hard_samples/agumented_hard_samples.json` |
 | 7 | `python 5DAP_for_hardsamples.py` | `model/output/5DAP4HS_output` |
 | 8 | `python 6model_iteration.py` | `model/output/6Iteration_output/iter_{1..3}`, `final/`, `iteration_report.json`, `iteration_pool.json`, `iteration_augmented.json` |
