@@ -127,10 +127,33 @@ def calculate_3gram_f1(pred: str, gold: str) -> float:
     return score
 
 ####### LLM as a Judge Reward Calculation Section
+VALID_JUDGE_SCORES = {"0.0", "0.3", "0.7", "1.0"}
+
 def extract_xml_score(text: str) -> str:
-    match = re.search(r'([01].\d)\s*$', text.strip())
-    if match:
-        return match.group(1)
+    """
+    Read the score out of a judge reply.
+
+    The judge prompt asks for a <score>...</score> block, so an end-anchored search for a bare
+    trailing number never matches a compliant reply -- that form only fires when the judge omits
+    the closing tag, which is why the judge signal used to collapse to 0.0. Search the tag first.
+    """
+    # Preferred: the <score> tag. Allows extra whitespace around the value and a short
+    # explanation inside the tag.
+    tag_match = re.search(r'<score\s*>(.*?)</score>', text, re.DOTALL)
+    if tag_match:
+        inner = tag_match.group(1).strip()
+        exact = re.fullmatch(r'([01]\.\d)', inner)
+        candidates = [exact.group(1)] if exact else re.findall(r'([01]\.\d)', inner)
+        for score_str in candidates:
+            # A judge that merely echoes the prompt's value list yields 0.0 here, which is the
+            # safe failure mode -- never reward a reply that gave no verdict.
+            if score_str in VALID_JUDGE_SCORES:
+                return score_str
+    # Fallback: a bare trailing number (older behaviour, kept for compatibility)
+    raw_match = re.search(r'([01]\.\d)\s*$', text.strip())
+    if raw_match and raw_match.group(1) in VALID_JUDGE_SCORES:
+        return raw_match.group(1)
+    # Unparseable reply or out-of-range score
     return "0.0"
 
 def str_to_num(s):
@@ -264,6 +287,7 @@ class RewardManager:
         self.reward_history.append(max_reward)
         sam_str = structured_data_to_string(error_texts[0],reasonings[0],
                                            error_positions[0],specific_error_reasons[0],corrected_texts[0])
+        # Hard sample strategy: For each prompt rollout group, use max reward across all generations; add to hard set if group max < threshold, otherwise remove.
         if max_reward < self.hard_reward:
             if sam_str not in self.hard_sams_set:
                 self.hard_sams_set.add(sam_str)
@@ -315,8 +339,8 @@ model = AutoModelForCausalLM.from_pretrained(
 )
 model.config.use_cache = False
 model.gradient_checkpointing_enable()
-model.generation_config.temperature = 0.2
-model.generation_config.top_p = 0.6
+model.generation_config.temperature = 1.3
+model.generation_config.top_p = 0.93
 model.generation_config.top_k = -1
 model.generation_config.do_sample = True
 model.generation_config.max_new_tokens = training_args.max_completion_length

@@ -13,7 +13,7 @@ from datasets import Dataset
 # When running independently, they must be defined here; otherwise a NameError will occur.
 MODEL_PATH = "../model/output/1DAP_output"   # Modify according to your actual path
 OUTPUT_DIR = "../model/output/2Cold_start_output"
-DATA_PATH = "../../data/train/RL_data/cold_start_samples.json"
+DATA_PATH = "../../data/train/RL_data/Cold_start/cold_start_samples.json"
 
 # ==================== Dependent Functions (from previous notebook cells) ====================
 def load_pretrain_samples(load_path):
@@ -144,7 +144,7 @@ model.gradient_checkpointing_enable()
 # ==================== Training Argument Configuration ====================
 training_args = TrainingArguments(
     output_dir=f"{OUTPUT_DIR}/training_output",
-    num_train_epochs=10,
+    num_train_epochs=20,
     per_device_train_batch_size=2,
     per_device_eval_batch_size=2,
     gradient_accumulation_steps=4,              # Effective batch = 2*4=8 (old comment value 16 was incorrect)

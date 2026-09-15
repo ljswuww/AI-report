@@ -13,8 +13,8 @@ os.environ["CUDA_VISIBLE_DEVICES"] = "0,1,2"
 os.environ["HF_ENDPOINT"] = "https://hf-mirror.com"
 
 # -------------------------- Path Configuration --------------------------
-MODEL_PATH = "../model/output/3GRPO_format_output"
-OUTPUT_DIR = "../model/output/4GRPO_format_output"
+MODEL_PATH = "../model/output/2Cold_start_output"
+OUTPUT_DIR = "../model/output/3GRPO_format_output"
 data_path = "../../data/train/RL_data/GRPO_format/RL_format_samples.json"
 
 # -------------------------- Simplified Prompt --------------------------
@@ -179,8 +179,8 @@ model = AutoModelForCausalLM.from_pretrained(
 )
 model.config.use_cache = False
 model.gradient_checkpointing_enable()
-model.generation_config.temperature = 0.2
-model.generation_config.top_p = 0.6
+model.generation_config.temperature = 1.3
+model.generation_config.top_p = 0.93
 model.generation_config.top_k = -1
 model.generation_config.do_sample = True
 model.generation_config.max_new_tokens = training_args.max_completion_length
