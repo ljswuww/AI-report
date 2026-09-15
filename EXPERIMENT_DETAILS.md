@@ -4,8 +4,14 @@ Supplementary implementation details for the closed-loop reinforcement-learning 
 intelligent auditing of AEC-Q-compliant automotive-grade chip test reports.
 
 This document records the environment, data construction, per-stage configurations, reward design,
-hard-sample pool mechanics, and evaluation protocol. Figures reported in the main text are not
-repeated here.
+hard-sample pool mechanics, and evaluation protocol. Measured values are not repeated here.
+
+Two companion documents cover the comparison experiments, and both reuse the evaluation protocol
+defined in §7 rather than restating it:
+
+- `BASELINE_DETAILS.md` — setup of the six comparison methods.
+- `ABLATION_DETAILS.md` — setup of the six one-module-removed pipeline variants.
+- `JUDGE_VALIDATION_DETAILS.md` — setup of the judge reliability and human validation experiment.
 
 **Contents**
 
@@ -112,7 +118,7 @@ volume.
 |---|---|
 | `data/train/Hard_samples/hard_samples.txt` | Dump flushed by the content-GRPO stage |
 | `data/train/Hard_samples/origin_hard_samples.json` | The same records converted back to the JSON five-field schema — the diagnosed hard-sample pool |
-| `data/train/Hard_samples/agumented_hard_samples.json` | Augmented set consumed by stage 5 |
+| `data/train/Hard_samples/augmented_hard_samples.json` | Augmented set consumed by stage 5 |
 
 The training loop dumps its accumulated hard-sample set to `hard_samples.txt` in a `finally` block,
 so the file survives an interrupted run. Records are joined with the `*|||*\n` separator, and the
@@ -171,6 +177,27 @@ cold-start onwards sees an in-distribution prompt. `{Input_text}` is the only su
 
 `1DAP.py` is the exception: it consumes the DAP corpus as already-rendered `{"text": ...}` records,
 so the prompt is baked into the corpus rather than into the script.
+
+`code/train/utils/prompts.py` holds a further copy, for callers that are not one of the six stage
+scripts — currently the static hard-sample diagnosis used by the `no-T-GRPO` ablation, which has to
+present a checkpoint with the same input paradigm the GRPO stages used.
+
+**The copies are not byte-identical, and one of them is reworded.** Diffed against the file in
+`prompts/`:
+
+| Copy | Difference from the file in `prompts/` |
+|---|---|
+| `6model_iteration.py`, `test.py`, `utils/prompts.py` | byte-identical to one another; versus the file in `prompts/` they drop four blank lines and some trailing spaces |
+| `3grpo_format.py`, `4grpo_content.py` | lines match the file in `prompts/` character for character; they differ from the three above in trailing whitespace on a few lines |
+| `5DAP_for_hardsamples.py` | same wording, but the constant is named `SYSTEM_PROMPT_TEMPLATE` rather than `SYSTEM_PROMPT`, and four section headings lose the second space (`###  TASKS ###` → `### TASKS ###`) |
+| `2cold_start_SFT.py` | **reworded**, in seven of its lines: three of the four numbered tasks, both bracket slots, and two format sentences, e.g. "Judge if there is an error … based on what you know" → "Judge whether there is an error … based on your knowledge", "XML-like format" → "XML format", and "your response will be considered completely invalid" → "your response will be regarded as invalid" |
+
+The `5DAP_for_hardsamples.py` differences are spacing only, and the headings are markers rather than
+instructions, so the two prompts are functionally the same text. The `2cold_start_SFT.py` copy is
+not: it is a paraphrase of the cold-start instructions, and it is the prompt the model is
+supervised on in stage 2. It is recorded here rather than corrected, because rewriting it would
+change the token sequence of an existing training run. Anyone treating the prompt as a single
+constant across the pipeline should be aware that stage 2 reads a variant of it.
 
 ---
 
@@ -277,7 +304,7 @@ temperature widens exploration in a task whose reward is sparse and largely bina
 |---|---|
 | Script | `5DAP_for_hardsamples.py` |
 | Init from | `4GRPO_content_output` |
-| Data | `agumented_hard_samples.json`, converted on the fly |
+| Data | `augmented_hard_samples.json`, converted on the fly |
 | Output | `model/output/5DAP4HS_output` |
 | Sequence length | 2048 |
 | Epochs | 5 |
@@ -393,7 +420,8 @@ Equivalence is judged semantically: wording, diction and sentence structure may 
 the same text span, the same core error point, and an equivalent professional correction are
 identified. Replies are scored 0.0 unless a `<score>` value is parseable into the valid set.
 The judge prompt is `prompts/LLM‑as‑a-judge prompt used during GRPO training.txt`; the backbone is
-`deepseek-chat` through the OpenAI-compatible endpoint `https://api.deepseek.com`.
+DeepSeek-V4-Pro, requested as `deepseek-chat` through the OpenAI-compatible endpoint
+`https://api.deepseek.com`.
 
 **Aggregation:**
 
@@ -427,8 +455,12 @@ reward and attributes it to the first replicated row; `6model_iteration.py` inst
 group size from the batch at runtime and indexes each group by its own prompt, so a raised
 `generation_batch_size` cannot silently drop hard samples.
 
-Pool identity is the `-*-`-joined five-tuple `error_text / reasoning / error_position /
-specific_error_reason / corrected_content` — the same key used for the stage-4 dump.
+Pool identity is the five-tuple `error_text / reasoning / error_position / specific_error_reason /
+corrected_content`, serialised by joining the fields on `\x01`. The two stages that maintain a
+hard-sample set identify a sample by the same five fields, but they do not serialise it the same
+way: stage 4 writes its dump with the `-*-` delimiter (§2.3) because that file is line- and
+delimiter-parsed, while stage 6 joins on a control character for the in-memory pool key it persists
+to `iteration_pool.json`. The tuple is the identity; the delimiter is a per-file encoding choice.
 
 **Stage 6 pool mechanics.** The pool is seeded from stage 4's hard-sample dump and extended at
 each iteration with newly diagnosed samples, which are augmented at 1:5 before seeding the next
@@ -478,7 +510,7 @@ The ECA evaluator is fully decoupled from the training-phase judge:
 
 | | Training judge | ECA judge |
 |---|---|---|
-| Backbone | `deepseek-chat` | `qwen3.8-max` |
+| Backbone | DeepSeek-V4-Pro, id `deepseek-chat` | `qwen3.8-max` |
 | Scaling rule | step-wise cumulative {0.0, 0.3, 0.7, 1.0} | all-or-nothing {0.0, 1.0} |
 | Prompt | `prompts/LLM‑as‑a-judge prompt used during GRPO training.txt` | `prompts/LLM‑as‑a-judge prompt used during computing ECA.txt` |
 
@@ -538,7 +570,7 @@ Run from `code/train`, in order; the ECA script runs from `code/test`.
 | 3 | `python 3grpo_format.py` | `model/output/3GRPO_format_output`, `reward.txt` |
 | 4 | `python 4grpo_content.py` | `model/output/4GRPO_content_output`, `data/train/Hard_samples/hard_samples.txt`, `reward.txt` |
 | 5 | `python ../../data/train/Hard_samples/txt2json.py` | `data/train/Hard_samples/origin_hard_samples.json` (paths are set inside the script, not on the command line) |
-| 6 | `python utils/Rules_augmented_hardsamples.py` | `data/train/Hard_samples/agumented_hard_samples.json` |
+| 6 | `python utils/Rules_augmented_hardsamples.py` | `data/train/Hard_samples/augmented_hard_samples.json` |
 | 7 | `python 5DAP_for_hardsamples.py` | `model/output/5DAP4HS_output` |
 | 8 | `python 6model_iteration.py` | `model/output/6Iteration_output/iter_{1..3}`, `final/`, `iteration_report.json`, `iteration_pool.json`, `iteration_augmented.json` |
 | 9 | `cd ../test && python test.py` | `code/test/eca_results/eca_per_sample.jsonl`, `eca_summary.json` |

@@ -12,16 +12,23 @@ from transformers import (
 )
 
 # ==================== Global Configuration ====================
+# Paths are routed through `override` so an ablation variant can redirect them without editing this
+# file. With no ABLATION_* environment set the defaults below apply and a direct run is unchanged.
+from ablation_config import override, announce  # noqa: E402
+
 # Base model path (input: GRPO stage 2 output)
-MODEL_PATH = "../model/output/4GRPO_content_output"
+MODEL_PATH = override("5dap4hs.MODEL_PATH", "../model/output/4GRPO_content_output")
 # Output directory (DAP4HS trained model)
-OUTPUT_DIR = "../model/output/5DAP4HS_output"
+OUTPUT_DIR = override("5dap4hs.OUTPUT_DIR", "../model/output/5DAP4HS_output")
 # Cache directory
 CACHE_DIR = "../model/base/dap4hs_cache"
 os.makedirs(CACHE_DIR, exist_ok=True)
 
 # Augmented hard sample data path
-AUGMENTED_SAMPLES_PATH = "../../data/train/Hard_samples/agumented_hard_samples.json"
+AUGMENTED_SAMPLES_PATH = override(
+    "5dap4hs.AUGMENTED_SAMPLES_PATH",
+    "../../data/train/Hard_samples/augmented_hard_samples.json",
+)
 
 # System prompt template (100% consistent with GRPO stage to ensure paradigm alignment)
 SYSTEM_PROMPT_TEMPLATE = """You are a professional expert in text error diagnosis and correction, with specialized expertise in the field of AEC-Q automotive-grade chip testing.

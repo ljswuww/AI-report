@@ -137,7 +137,7 @@ def augment_single_sample(original_sample: Dict) -> List[Dict]:
 # -------------------------- Main Entry --------------------------
 def main():
     input_path = "../../data/train/Hard_samples/origin_hard_samples.json"
-    output_path = "../../data/train/Hard_samples/agumented_hard_samples.json"
+    output_path = "../../data/train/Hard_samples/augmented_hard_samples.json"
 
     # Load original hard‑sample dataset
     with open(input_path, "r", encoding="utf-8") as f:

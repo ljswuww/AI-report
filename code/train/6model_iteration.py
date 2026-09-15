@@ -42,19 +42,28 @@ from transformers import AutoTokenizer, AutoModelForCausalLM
 from trl import GRPOConfig, GRPOTrainer
 from openai import OpenAI
 
+# Sits beside this script, so no sys.path surgery is needed for it
+from ablation_config import override, reward_mode, augmented_seed_enabled, announce
+
 # ==================== Global Configuration ====================
 # Environment
 os.environ["CUDA_VISIBLE_DEVICES"] = "0,1,2"
 os.environ["HF_ENDPOINT"] = "https://hf-mirror.com"
 
-# Paths
-MODEL_PATH = "../model/output/5DAP4HS_output"      # stage 5 output (targeted hard-sample DAP)
-OUTPUT_DIR = "../model/output/6Iteration_output"   # one sub-directory per iteration
-BASE_DATA_PATH = "../../data/train/RL_data/GRPO_content/RL_content_samples.json"
-POOL_PATH = "../../data/train/Hard_samples/iteration_pool.json"
-AUGMENTED_PATH = "../../data/train/Hard_samples/iteration_augmented.json"
-# Stage 5 already produced one round of augmented hard samples; seed the accumulated set with them
-AUGMENTED_SEED_PATH = "../../data/train/Hard_samples/agumented_hard_samples.json"
+# Paths. Each is routed through `override` so an ablation variant can redirect it without editing
+# this file; with no environment set the defaults below apply and a direct run is unchanged.
+MODEL_PATH = override("6it.MODEL_PATH", "../model/output/5DAP4HS_output")   # stage 5 output
+OUTPUT_DIR = override("6it.OUTPUT_DIR", "../model/output/6Iteration_output")
+BASE_DATA_PATH = override(
+    "6it.BASE_DATA_PATH", "../../data/train/RL_data/GRPO_content/RL_content_samples.json")
+POOL_PATH = override("6it.POOL_PATH", "../../data/train/Hard_samples/iteration_pool.json")
+AUGMENTED_PATH = override(
+    "6it.AUGMENTED_PATH", "../../data/train/Hard_samples/iteration_augmented.json")
+# Stage 5 already produced one round of augmented hard samples; seed the accumulated set with them.
+# The `no-HSO` ablation disables the seed: that variant removes the module which produced this file,
+# so inheriting it would import part of the removed module's effect back into the loop.
+AUGMENTED_SEED_PATH = override(
+    "6it.AUGMENTED_SEED_PATH", "../../data/train/Hard_samples/augmented_hard_samples.json")
 REPORT_PATH = f"{OUTPUT_DIR}/iteration_report.json"
 
 # Closed-loop settings (paper Sec. IV-C / III-F)
@@ -63,8 +72,9 @@ CONVERGENCE_TOL = 0.03          # validation mixed reward fluctuation < 3%
 CONVERGENCE_PATIENCE = 2        # ...for two consecutive rounds
 HARD_POOL_RATIO = 0.05          # hard-sample pool < 5% of the total sample pool
 
-# Hard-sample diagnosis. 9.0 on the 0-10 reward scale == the paper's normalised 0.9 threshold
-HARD_REWARD_THRESHOLD = 9.0
+# Hard-sample diagnosis: 9.0 on the 0-10 reward scale, the paper's normalised 0.9 threshold.
+# Assigned below from the shared definition, so stage 4, stage 6 and static diagnosis cannot drift
+# apart on what counts as hard.
 
 # Data split. The paper uses 9:1 train/validation over the CoT dataset; the split is fixed by
 # seed so that every iteration is scored on exactly the same validation samples.
@@ -90,8 +100,21 @@ JUDGE_MODEL = "deepseek-chat"
 JUDGE_STYLE = "training"        # "training" | "eca"
 JUDGE_MAX_RETRIES = 3
 
+# Reward aggregate. "hybrid" is Eq. 7; "code_only" drops the judge term and keeps the code
+# component on its native 0-10 scale, which is what the `no-HR` ablation runs. Read once at import.
+REWARD_MODE = reward_mode()
+
 UTILS_DIR = Path(__file__).resolve().parent / "utils"
 sys.path.insert(0, str(UTILS_DIR))
+
+# The reward has one definition, shared with the other stages and with static hard-sample
+# diagnosis. Importing it here instead of redeclaring it is what keeps a variant's pool selected
+# by the same criterion as the full pipeline's.
+from reward_utils import (  # noqa: E402
+    compute_mixed_reward, llm_as_a_judge, sample_key, DEFAULT_HARD_REWARD_THRESHOLD,
+)
+
+HARD_REWARD_THRESHOLD = DEFAULT_HARD_REWARD_THRESHOLD
 
 # ==================== Prompts ====================
 # Must stay byte-identical to 4grpo_content.py / 5DAP_for_hardsamples.py so that the policy sees
@@ -122,79 +145,6 @@ If you do not follow this exact format, your response will be considered complet
 Text:  {Input_text}
 """
 
-# Training-style judge: step-wise CUMULATIVE scoring, {0.0, 0.3, 0.7, 1.0}.
-# Mirrors prompts/LLM-as-a-judge prompt used during GRPO training.txt and 4grpo_content.py.
-JUDGE_PROMPT_TRAINING = """You are a rigorous yet flexible evaluation expert for error-correction models in the AEC-Q automotive chip testing domain. Evaluate model output and give final score per rules below.
-
-## Evaluation Rules
-Step-wise cumulative scoring. Check AI output against gold standard in order:
-Step1: Check "Error Location". 0.3 points for matching location, proceed; otherwise 0.0 points, stop.
-Step2: Check "Error Reason". Add 0.4 points (total 0.7) for equivalent reason, proceed; otherwise keep 0.3 points, stop.
-Step3: Check "Corrected Text". Add 0.3 points to reach full score for consistent correction; otherwise keep 0.7 points, stop.
-
-## Equivalence Criteria
-- **Error Location**: Different wording allowed, must point to identical text span or semantic unit.
-- **Error Reason**: Different diction & sentence structure allowed, must retain the core error point.
-- **Corrected Text**: Synonym substitution and rephrasing allowed. Revised professional content must be equivalent to gold standard and free of new errors.
-
-## Input Information
-- Original erroneous text: {error_text}
-- AI predicted error location: {AI_pos}
-- AI predicted error reason: {AI_rsn}
-- AI corrected text: {AI_cor}
-- Gold-standard error location: {gold_pos}
-- Gold-standard error reason: {gold_rsn}
-- Gold-standard corrected text: {gold_cor}
-
-## Output Format
-Output strictly following the structure below:
-<reasoning>
-[Write step-by-step reasoning, state comparison basis and points obtained at each step.]
-</reasoning>
-<score>
-[Final score, valid values: 0.0 / 0.3 / 0.7 / 1.0]
-</score>
-"""
-
-# ECA-style judge: step-wise ALL-OR-NOTHING scoring, {0.0, 1.0}.
-# Mirrors prompts/LLM-as-a-judge prompt used during computing ECA.txt.
-JUDGE_PROMPT_ECA = """You are a rigorous yet flexible evaluation expert for error-correction models in the AEC-Q automotive chip testing domain. Evaluate model output and give final score per rules below.
-
-## Evaluation Rules
-
-Step-wise all-or-nothing scoring. Check AI output against gold standard in order:
-Step1: Check "Error Location". Proceed to Step 2 for matching location; otherwise score 0.0, stop.
-Step2: Check "Error Reason". Proceed to Step 3 for equivalent reason; otherwise score 0.0, stop.
-Step3: Check "Corrected Text". Score 1.0 for consistent correction with no new errors; otherwise score 0.0, stop.
-
-## Equivalence Criteria
-
-- **Error Location**: Different wording allowed, must point to identical text span or semantic unit.
-- **Error Reason**: Different diction & sentence structure allowed, must retain the core error point.
-- **Corrected Text**: Synonym substitution and rephrasing allowed. Revised professional content must be equivalent to gold standard and free of new errors.
-
-## Input Information
-
-- Original erroneous text: {error_text}
-- AI predicted error location: {AI_pos}
-- AI predicted error reason: {AI_rsn}
-- AI corrected text: {AI_cor}
-- Gold-standard error location: {gold_pos}
-- Gold-standard error reason: {gold_rsn}
-- Gold-standard corrected text: {gold_cor}
-
-## Output Format
-
-Output strictly following the structure below:<reasoning>
-[Write step-by-step reasoning, state comparison basis and judgment result at each step.]</reasoning><score>
-[Final score, valid values: 0.0 / 1.0]</score>
-"""
-
-JUDGE_TEMPLATES = {"training": JUDGE_PROMPT_TRAINING, "eca": JUDGE_PROMPT_ECA}
-
-# Schema of every CoT sample used by the RL stages
-SAMPLE_FIELDS = ("error_text", "reasoning", "error_position", "specific_error_reason", "corrected_content")
-
 # -------------------------- LLM-as-a-judge client --------------------------
 # NOTE: replace with your real key. LLM_augmented_hardsamples.py keeps its own client,
 # so if AUGMENT_MODE == "llm" you must set the key there as well.
@@ -204,163 +154,19 @@ client = OpenAI(
 )
 
 
-# ==================== 3-gram F1 (paper Eqs. 1-6) ====================
-# Kept identical to 4grpo_content.py so the reward is defined the same way at every stage.
-def prepare_text(text):
-    """Insert spaces around every CJK character so the text can be split on whitespace."""
-    return re.sub(r"([一-鿿])", r" \1 ", text)
+def judge_style_score(error_text, ai_pos, ai_rsn, ai_cor, gold_pos, gold_rsn, gold_cor):
+    """
+    Bind this stage's client, prompt style and retry policy into the reward's `judge_fn` slot.
 
-
-def get_ngrams(words, n, deduplicate=False):
-    """Build the n-gram list of a word sequence (Eqs. 1-3)."""
-    if len(words) < n:
-        return []
-    ngrams = ["-".join(words[i:i + n]) for i in range(len(words) - n + 1)]
-    if deduplicate:
-        ngrams = list(set(ngrams))
-    return ngrams
-
-
-def calculate_f1(pred_grams, gold_grams):
-    """Harmonic mean of multiset precision and recall (Eqs. 4-6)."""
-    pred_counter = Counter(pred_grams)
-    gold_counter = Counter(gold_grams)
-    common = sum((pred_counter & gold_counter).values())
-    precision = common / len(pred_grams) if pred_grams else 0
-    recall = common / len(gold_grams) if gold_grams else 0
-    if precision + recall == 0:
-        return 0.0
-    return 2 * precision * recall / (precision + recall)
-
-
-def calculate_3gram_f1(pred: str, gold: str) -> float:
-    pred_words = prepare_text(pred).split()
-    gold_words = prepare_text(gold).split()
-    if not pred_words or not gold_words:
-        return 0.0
-    if len(pred_words) < 3 and len(gold_words) < 3:
-        return 1.0 if pred == gold else 0.0
-    return calculate_f1(
-        get_ngrams(pred_words, 3, deduplicate=False),
-        get_ngrams(gold_words, 3, deduplicate=False),
+    `reward_utils` holds no client of its own, so the endpoint and key stay declared in exactly one
+    place per stage. Only reached in hybrid reward mode -- code-only never calls it.
+    """
+    return llm_as_a_judge(
+        client, error_text, ai_pos, ai_rsn, ai_cor, gold_pos, gold_rsn, gold_cor,
+        style=JUDGE_STYLE, model=JUDGE_MODEL, max_retries=JUDGE_MAX_RETRIES,
     )
 
 
-# ==================== Response parsing / LLM-as-a-judge ====================
-def extract_field(text: str, field: str) -> str:
-    """Return the content of <field>...</field>, or "not find" when absent/malformed."""
-    start_tag, end_tag = f"<{field}>", f"</{field}>"
-    if start_tag not in text or end_tag not in text:
-        return "not find"
-    try:
-        start_idx = text.index(start_tag) + len(start_tag)
-        end_idx = text.index(end_tag, start_idx)
-        return text[start_idx:end_idx].strip()
-    except ValueError:
-        return "not find"
-
-
-def parse_response(response: str) -> dict:
-    """Split a model completion into the four structured-CoT elements."""
-    return {f: extract_field(response, f) for f in
-            ("reasoning", "error_position", "specific_error_reason", "corrected_text")}
-
-
-def has_full_format(parsed: dict) -> bool:
-    """All four tags present with content -> eligible for content scoring."""
-    return all(v != "not find" for v in parsed.values())
-
-
-# Discrete score sets the two judge prompts can emit
-VALID_JUDGE_SCORES = ("0.0", "0.3", "0.7", "1.0")
-_SCORE_ALT = "|".join(re.escape(v) for v in VALID_JUDGE_SCORES)
-
-
-def extract_xml_score(text: str) -> float:
-    """
-    Read the score out of a judge reply.
-
-    The prompt asks the judge to answer inside a <score>...</score> block, so an end-anchored
-    search for a bare trailing number can never match a compliant reply -- it only fires when
-    the judge omits the closing tag. Search the block first, fall back to a trailing number.
-    """
-    text = (text or "").strip()
-
-    block = re.search(r"<score\s*>(.*?)</score>", text, re.S)
-    if block:
-        inner = block.group(1).strip()
-        # Preferred form: the block holds nothing but the value
-        bare = re.fullmatch(f"({_SCORE_ALT})", inner)
-        if bare:
-            return float(bare.group(1))
-        # Judge added prose around the value; take the first value it names. A judge that
-        # merely echoes the prompt's value list yields 0.0, which is the safe failure mode.
-        found = re.search(f"({_SCORE_ALT})", inner)
-        return float(found.group(1)) if found else 0.0
-
-    # Unclosed <score>, or a judge that answered without tags at all
-    tail = re.search(f"({_SCORE_ALT})\\s*$", text)
-    return float(tail.group(1)) if tail else 0.0
-
-
-def llm_as_a_judge(error_text, ai_pos, ai_rsn, ai_cor, gold_pos, gold_rsn, gold_cor,
-                   style=JUDGE_STYLE, model=JUDGE_MODEL, max_retries=JUDGE_MAX_RETRIES) -> float:
-    """Semantic comparison over the pre-matched CoT elements. Lightweight, no full audit."""
-    prompt = JUDGE_TEMPLATES[style].format(
-        error_text=error_text, AI_pos=ai_pos, AI_rsn=ai_rsn, AI_cor=ai_cor,
-        gold_pos=gold_pos, gold_rsn=gold_rsn, gold_cor=gold_cor,
-    )
-    for attempt in range(max_retries):
-        try:
-            response = client.chat.completions.create(
-                model=model,
-                messages=[
-                    {"role": "system", "content": "You are a helpful assistant"},
-                    {"role": "user", "content": prompt},
-                ],
-                stream=False,
-            )
-            return extract_xml_score(response.choices[0].message.content)
-        except Exception as exc:                      # network / rate limit / malformed reply
-            print(f"  [judge] attempt {attempt + 1}/{max_retries} failed: {exc}")
-            time.sleep(2 ** attempt)
-    # Exhausted retries: return the neutral-low fallback rather than crashing a multi-hour loop
-    print("  [judge] all retries exhausted, falling back to 0.0")
-    return 0.0
-
-
-def compute_mixed_reward(response: str, error_text: str, gold_pos: str, gold_spec: str, gold_corr: str):
-    """
-    Paper Eq. 7: R_total = w_F1 * (code reward) + w_judge * S_judge, with w_F1:w_judge = 0.1:0.9.
-    Format eligibility is enforced first -- an output that does not carry the full CoT structure
-    receives zero and is never content-scored.
-
-    Identical to 4grpo_content.py:RewardManager.core_correction_reward, but usable outside TRL.
-    Returns (total, code_reward, judge_score).
-    """
-    parsed = parse_response(response)
-    if not has_full_format(parsed):
-        return 0.0, 0.0, 0.0
-
-    res_pos = parsed["error_position"]
-    if gold_pos == "" and res_pos.lower() == "none":
-        pos_score = 8.0
-    else:
-        pos_score = calculate_3gram_f1(res_pos, gold_pos) * 8.0
-    corr_score = calculate_3gram_f1(parsed["corrected_text"], gold_corr) * 1.5
-
-    code_reward = max(0.0, min(0.5 + pos_score + corr_score, 10.0))
-    judge_score = llm_as_a_judge(
-        error_text, res_pos, parsed["specific_error_reason"], parsed["corrected_text"],
-        gold_pos, gold_spec, gold_corr,
-    )
-    return code_reward * 0.1 + judge_score * 9.0, code_reward, judge_score
-
-
-# ==================== Hard-sample pool ====================
-def sample_key(sample: dict) -> str:
-    """Stable identity of a sample: all five gold fields. Matches the set-dedup of stage 4."""
-    return "".join(str(sample.get(f, "")) for f in SAMPLE_FIELDS)
 
 
 def load_json(path, default=None):
@@ -462,7 +268,8 @@ class ClosedLoopRewardManager:
             responses, error_texts, gold_positions, gold_reasons, gold_corrected
         ):
             total, _, _ = compute_mixed_reward(
-                response, error_text, gold_pos, gold_spec, gold_corr
+                response, error_text, gold_pos, gold_spec, gold_corr,
+                judge_fn=judge_style_score, reward_mode=REWARD_MODE,
             )
             rewards.append(total)
 
@@ -596,6 +403,7 @@ def evaluate_validation(model, tokenizer, val_samples):
             total, code, judge = compute_mixed_reward(
                 response, sample["error_text"], sample["error_position"],
                 sample["specific_error_reason"], sample["corrected_content"],
+                judge_fn=judge_style_score, reward_mode=REWARD_MODE,
             )
             scores.append(total)
             code_scores.append(code)
@@ -675,6 +483,9 @@ def build_grpo_config(iteration: int) -> GRPOConfig:
 
 # ==================== Main loop ====================
 def main():
+    ablation_variant = announce("6model_iteration")
+    seed_augmented = augmented_seed_enabled()
+
     report = {
         "config": {
             "model_path": MODEL_PATH,
@@ -689,6 +500,11 @@ def main():
             "augment_variant_num": AUGMENT_VARIANT_NUM,
             "judge_model": JUDGE_MODEL,
             "judge_style": JUDGE_STYLE,
+            # In code-only mode the convergence signal is the code reward, not the mixed reward,
+            # because there is no judge term to mix in. Recorded so a report is self-describing.
+            "reward_mode": REWARD_MODE,
+            "ablation_variant": ablation_variant,
+            "augmented_seed_enabled": seed_augmented,
         },
         "iterations": [],
         "converged": False,
@@ -698,9 +514,14 @@ def main():
     pool = HardSamplePool(load_json(POOL_PATH, []))
     augmented = load_json(AUGMENTED_PATH, None)
     if augmented is None:
-        # First run: seed the accumulated augmented set with stage 5's output
-        augmented = load_json(AUGMENTED_SEED_PATH, [])
-        print(f"[data] seeded accumulated augmented set with {len(augmented)} stage-5 samples")
+        # First run: seed the accumulated augmented set with stage 5's output. The `no-HSO`
+        # ablation suppresses this, because it removes the module that produced that file.
+        augmented = load_json(AUGMENTED_SEED_PATH, []) if seed_augmented else []
+        if seed_augmented:
+            print(f"[data] seeded accumulated augmented set with {len(augmented)} stage-5 samples")
+        else:
+            print("[data] augmented-seed disabled for this variant: starting from an empty "
+                  "accumulated set")
 
     base_samples = load_json(BASE_DATA_PATH, [])
     if not base_samples:

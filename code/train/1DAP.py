@@ -12,10 +12,14 @@ from transformers import (
 )
 
 # ==================== Global Configuration ====================
+# Paths are routed through `override` so an ablation variant can redirect them without editing this
+# file. With no ABLATION_* environment set the defaults below apply and a direct run is unchanged.
+from ablation_config import override, announce  # noqa: E402
+
 # Local model directory
-local_model_dir = "../model/base/qwen2.5-14b-instruct"
+local_model_dir = override("1dap.MODEL_PATH", "../model/base/qwen2.5-14b-instruct")
 # Output directory (path to save the fine-tuned model)
-OUTPUT_DIR = "../model/output/1DAP_output"
+OUTPUT_DIR = override("1dap.OUTPUT_DIR", "../model/output/1DAP_output")
 # Cache directory
 CACHE_DIR = "../model/base/dap_cache"
 os.makedirs(CACHE_DIR, exist_ok=True)

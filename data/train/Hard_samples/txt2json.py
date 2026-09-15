@@ -1,9 +1,18 @@
 import json
+import sys
 from pathlib import Path
 
+# Reuse the single definition of the override convention rather than restating the naming rule here
+sys.path.insert(0, str(Path(__file__).resolve().parents[3] / "code" / "train"))
+from ablation_config import override  # noqa: E402
+
 # ========== 配置路径 ==========
-input_txt_path = Path(r"C:\Users\shy\AI-report\data\train\Hard_samples\hard_samples.txt")
-output_json_path = Path(r"C:\Users\shy\AI-report\data\train\Hard_samples\origin_hard_samples.json")
+# Defaults are the pipeline's absolute paths. An ablation variant overrides them so it converts its
+# own dump into its own working directory instead of the shared one.
+input_txt_path = Path(override(
+    "txt2json.INPUT_TXT", r"C:\Users\shy\AI-report\data\train\Hard_samples\hard_samples.txt"))
+output_json_path = Path(override(
+    "txt2json.OUTPUT_JSON", r"C:\Users\shy\AI-report\data\train\Hard_samples\origin_hard_samples.json"))
 
 # ========== 定义函数 ==========
 def string_to_structured_data(s):

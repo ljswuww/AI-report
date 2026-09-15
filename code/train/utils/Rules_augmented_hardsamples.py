@@ -287,9 +287,20 @@ def augment_single_sample(original_sample: Dict, variant_num: int = 5) -> List[D
 
 # -------------------------- Main Entry Point --------------------------
 def main():
-    # Path configuration
-    input_path = "../../data/train/Hard_samples/origin_hard_samples.json"
-    output_path = "../../data/train/Hard_samples/agumented_hard_samples.json"
+    # Path configuration. Routed through `override` so an ablation variant can run its own
+    # augmentation into its own working directory; with no ABLATION_* set the pipeline defaults
+    # below apply and a direct run is unchanged.
+    # `ablation_config` lives one level up; running this file directly puts only `utils/` on
+    # sys.path, so the parent directory has to be added explicitly.
+    import sys as _sys
+    from pathlib import Path as _Path
+    _sys.path.insert(0, str(_Path(__file__).resolve().parent.parent))
+    from ablation_config import override
+
+    input_path = override("augment.INPUT_JSON",
+                          "../../data/train/Hard_samples/origin_hard_samples.json")
+    output_path = override("augment.OUTPUT_JSON",
+                           "../../data/train/Hard_samples/augmented_hard_samples.json")
 
     # Load original hard‑sample dataset
     with open(input_path, 'r', encoding='utf-8') as f:

@@ -4,9 +4,11 @@ ECA (Error-Correction Accuracy) evaluation for the AEC-Q test report auditing mo
 
 import os
 import re
+import sys
 import json
 import time
 import traceback
+from pathlib import Path
 
 import numpy as np
 import torch
@@ -14,12 +16,18 @@ from transformers import AutoTokenizer, AutoModelForCausalLM
 from openai import OpenAI
 
 # ==================== Configuration ====================
+# Paths are overridable via ABLATION_<KEY> so an ablation variant's checkpoint can be evaluated
+# without editing this file; with nothing set the defaults below apply.
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "train"))
+from ablation_config import override  # noqa: E402
+
 # Models from all stages can undergo ECA testing.
 # Model under evaluation. `final` is the converged artifact of the closed-loop iteration stage;
 # point this at `6Iteration_output/iter_N` or at an earlier stage for ablation runs.
-MODEL_PATH = "../model/output/6Iteration_output/final"
-DATA_PATH = "../../data/test/test_samples.json"
-RESULT_DIR = "./eca_results"
+MODEL_PATH = override("test.MODEL_PATH", "../model/output/6Iteration_output/final")
+DATA_PATH = override("test.DATA_PATH", "../../data/test/test_samples.json")
+# Per-variant result directories, so one variant's records cannot overwrite another's
+RESULT_DIR = override("test.RESULT_DIR", "./eca_results")
 RESULT_JSONL = f"{RESULT_DIR}/eca_per_sample.jsonl"
 SUMMARY_PATH = f"{RESULT_DIR}/eca_summary.json"
 

@@ -14,9 +14,22 @@ os.environ["CUDA_VISIBLE_DEVICES"] = "0,1,2"
 os.environ["HF_ENDPOINT"] = "https://hf-mirror.com"
 
 # -------------------------- Path Configuration --------------------------
-MODEL_PATH = "../model/output/3GRPO_format_output"
-OUTPUT_DIR = "../model/output/4GRPO_content_output"
-data_path = "../../data/train/RL_data/GRPO_content/RL_content_samples.json"
+# Routed through `override` so an ablation variant can redirect them without editing this file.
+# With no ABLATION_* environment set the defaults below apply and a direct run is unchanged.
+from ablation_config import override, reward_mode, announce  # noqa: E402
+
+MODEL_PATH = override("4grpo.MODEL_PATH", "../model/output/3GRPO_format_output")
+OUTPUT_DIR = override("4grpo.OUTPUT_DIR", "../model/output/4GRPO_content_output")
+data_path = override("4grpo.DATA_PATH",
+                     "../../data/train/RL_data/GRPO_content/RL_content_samples.json")
+# Hard-sample diagnosis dump, consumed by txt2json.py and then by the augmentation stage
+HARD_SAMPLES_TXT = override("4grpo.HARD_SAMPLES_TXT",
+                            "../../data/train/Hard_samples/hard_samples.txt")
+
+# Reward aggregate. "hybrid" is Eq. 7; "code_only" drops the LLM-as-a-judge term and keeps the code
+# component on its native 0-10 scale, which is what the `no-HR` ablation runs.
+REWARD_MODE = reward_mode()
+announce("4grpo_content")
 
 # -------------------------- Simplified Prompt --------------------------
 SYSTEM_PROMPT = """You are a professional expert in text error diagnosis and correction, with specialized expertise in the field of AEC-Q automotive-grade chip testing.
@@ -273,9 +286,17 @@ class RewardManager:
                 corr_score = corr_f1 * 1.5
                 code_reward = format_score + pos_score + corr_score
                 code_reward = max(0.0, min(code_reward, 10.0))
-                judge_reward = llm_as_a_judge(error_text,res_pos,res_spec,res_corr,
-                                             gold_pos,gold_spec,gold_corr)
-                total_reward = code_reward * 0.1 + judge_reward * 9
+                if REWARD_MODE == "code_only":
+                    # `no-HR`: the judge term is dropped entirely and the code component is left on
+                    # its native 0-10 scale rather than rescaled. The hard-sample threshold is
+                    # defined in absolute reward units, so rescaling here would change which
+                    # samples are diagnosed as hard at the same time as it removes the judge --
+                    # two variables moving at once. No judge call is made in this mode.
+                    total_reward = code_reward
+                else:
+                    judge_reward = llm_as_a_judge(error_text,res_pos,res_spec,res_corr,
+                                                 gold_pos,gold_spec,gold_corr)
+                    total_reward = code_reward * 0.1 + judge_reward * 9
             else:
                 print("format error,reward:0.0")
                 total_reward = 0.0
@@ -378,8 +399,8 @@ try:
     trainer.train()
     print("Training completed, saving model...")
 finally:
-    file_path = "../../data/train/Hard_samples/hard_samples.txt"
-    separator = "*|||*\n"       
+    file_path = HARD_SAMPLES_TXT
+    separator = "*|||*\n"
     save_set_to_txt(reward_manager.hard_sams_set, file_path, separator)
     reward_path = "./reward.txt"
     save_list_as_string_to_txt(reward_manager.reward_history, reward_path)

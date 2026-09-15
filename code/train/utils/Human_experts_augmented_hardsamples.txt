@@ -65,7 +65,7 @@ Populate five fields for each generated variant according to the specification:
 
 ### Step 5: Archiving & Output
 1. Export validated augmented samples into unified JSON format with identical field ordering as source samples.
-2. Name output file `agumented_hard_samples.json` and save to path: `../../data/train/Hard_samples/`.
+2. Name output file `augmented_hard_samples.json` and save to path: `../../data/train/Hard_samples/`.
 3. Record augmentation statistics: number of source hard samples, total generated variants, distribution of error types, number of discarded samples.
 4. Archive all intermediate documents under confidentiality rules; no private retention or external dissemination.
 

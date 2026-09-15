@@ -11,9 +11,14 @@ from datasets import Dataset
 # ==================== Global Configuration ====================
 # Note: MODEL_PATH and load_pretrain_samples are defined in the preceding notebook cells.
 # When running independently, they must be defined here; otherwise a NameError will occur.
-MODEL_PATH = "../model/output/1DAP_output"   # Modify according to your actual path
-OUTPUT_DIR = "../model/output/2Cold_start_output"
-DATA_PATH = "../../data/train/RL_data/Cold_start/cold_start_samples.json"
+# Paths are routed through `override` so an ablation variant can redirect them without editing this
+# file. With no ABLATION_* environment set the defaults below apply and a direct run is unchanged.
+from ablation_config import override, announce  # noqa: E402
+
+MODEL_PATH = override("2csft.MODEL_PATH", "../model/output/1DAP_output")
+OUTPUT_DIR = override("2csft.OUTPUT_DIR", "../model/output/2Cold_start_output")
+DATA_PATH = override("2csft.DATA_PATH",
+                     "../../data/train/RL_data/Cold_start/cold_start_samples.json")
 
 # ==================== Dependent Functions (from previous notebook cells) ====================
 def load_pretrain_samples(load_path):

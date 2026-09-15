@@ -1,0 +1,8 @@
+# Python byte-code caches. Generated on import, machine- and interpreter-specific, never committed.
+__pycache__/
+*.py[cod]
+
+# Run outputs. Produced by training and evaluation, not part of the source tree. If a run's
+# artefacts are ever wanted in the history, add them explicitly with `git add -f`.
+code/model/output/
+code/test/eca_results/

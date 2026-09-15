@@ -13,9 +13,14 @@ os.environ["CUDA_VISIBLE_DEVICES"] = "0,1,2"
 os.environ["HF_ENDPOINT"] = "https://hf-mirror.com"
 
 # -------------------------- Path Configuration --------------------------
-MODEL_PATH = "../model/output/2Cold_start_output"
-OUTPUT_DIR = "../model/output/3GRPO_format_output"
-data_path = "../../data/train/RL_data/GRPO_format/RL_format_samples.json"
+# Routed through `override` so an ablation variant can redirect them without editing this file.
+# With no ABLATION_* environment set the defaults below apply and a direct run is unchanged.
+from ablation_config import override, announce  # noqa: E402
+
+MODEL_PATH = override("3grpo.MODEL_PATH", "../model/output/2Cold_start_output")
+OUTPUT_DIR = override("3grpo.OUTPUT_DIR", "../model/output/3GRPO_format_output")
+data_path = override("3grpo.DATA_PATH",
+                     "../../data/train/RL_data/GRPO_format/RL_format_samples.json")
 
 # -------------------------- Simplified Prompt --------------------------
 SYSTEM_PROMPT = """You are a professional expert in text error diagnosis and correction, with specialized expertise in the field of AEC-Q automotive-grade chip testing.
