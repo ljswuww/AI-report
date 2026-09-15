@@ -1,0 +1,104 @@
+# Procedure for Expert‑Driven Hard‑Sample Augmentation for AEC‑Q Automotive‑Grade Chip Test Report Auditing
+
+## 1. Purpose
+To standardize operating criteria for human experts to augment hard‑sample data identified by the model. The generated augmented samples shall conform to real‑world industrial auditing scenarios and comply with AEC‑Q specification logic. These samples are used to supplement training data targeting model weaknesses and improve the model’s capability to detect complex, subtle, and edge‑case non‑compliance items.
+
+## 2. Scope
+This procedure applies to hard‑sample augmentation for AEC‑series (Q100 / Q101 / Q003, etc.) automotive‑grade chip test‑report auditing. Output samples share identical data format with the original training set and can be directly fed into the GRPO reinforcement‑learning training pipeline.
+
+## 3. Pre‑requisites
+### 3.1 Required Materials
+- Original hard‑sample file: `origin_hard_samples.json`, containing model‑failed test‑report snippets, ground‑truth answers and annotations.
+- Official standard documents: Latest releases of AEC‑Q series standards (including clause hierarchy, test conditions, pass‑fail criteria, and sampling requirements).
+- Real‑world test‑report templates: In‑house original test‑report documents for typical products for reference of real‑world wording and data structures.
+- Historical defect library: Typical defect cases from past manual auditing records for alignment with real‑world defect distributions.
+
+### 3.2 Personnel Qualification
+Operators shall be senior AEC‑Q auditing experts satisfying all below requirements:
+- Minimum 3‑year working experience in automotive‑grade chip test‑report auditing.
+- Proficiency in AEC‑Q standard clauses and test logic.
+- Solid understanding of chip‑test engineering principles and physical meanings of parameters.
+- Certified competence in defect design and consistent annotation.
+
+### 3.3 Tools & Working Environment
+- Spreadsheet and plain‑text editors.
+- AEC‑Q standard retrieval system.
+- Sample format validator (optional).
+- Confidential workspace (no external distribution of any data).
+
+## 4. Guiding Principles & Augmentation Ratio
+### 4.1 Core Principles
+- **Engineering Realism**: Injected errors shall represent realistic typos, omissions or misinterpretations seen in industrial practice. Artifacts violating engineering logic are prohibited.
+- **Subtlety**: Designed errors shall mimic real‑world human pitfalls with reasonable ambiguity; trivial obvious mistakes shall be avoided.
+- **Annotation Fidelity**: Error location, root‑cause description and corrected text must match precisely to guarantee label quality.
+- **Diversity**: Variants derived from one source sample shall cover diverse error categories, positions and severity levels.
+
+### 4.2 Augmentation Ratio
+Strictly follow the **1:5 augmentation ratio**: generate five valid augmented variants per original hard sample.
+
+## 5. Step‑by‑Step Operating Procedure
+### Step 1: Hard‑Sample Reception & Root‑Cause Analysis
+1. Read the original hard sample; identify its corresponding test item, standard section and original error category.
+2. Diagnose model failure modes: distinguish between clause‑memory failure, parameter‑judgment failure, logical‑reasoning failure or format‑parsing failure.
+3. Locate relevant AEC‑Q standard clauses; clarify official requirements, parameter thresholds, sampling rules and pass‑fail criteria for the target test item.
+4. Tag model weakness for guidance in subsequent variant design.
+
+### Step 2: Error‑Variant Scheme Design
+For each original hard sample, design five variant schemes following rules below:
+1. The first four variants correspond one‑to‑one to the four core error types: clause‑citation error, test‑parameter deviation, failure‑criterion misapplication, cross‑chapter data inconsistency. One type per variant.
+2. The fifth variant is a high‑difficulty composite variant: combine two or more error types, or construct edge‑case scenarios such as near‑threshold deviation or implicit‑condition omission.
+3. All injected errors shall preserve the original professional context and writing style of real test reports.
+
+### Step 3: Sample Generation & Full‑Field Annotation
+Populate five fields for each generated variant according to the specification:
+- **error_text**: Text snippet with injected errors, derived from ground‑truth correct text. Retain original structure and wording; modify only target error segments.
+- **reasoning**: Chain‑of‑Thought auditing reasoning following the pattern “domain‑knowledge comparison → error‑unit localization”, maintaining style consistency with training‑set CoT samples.
+- **error_position**: Minimal complete semantic span containing the error; restrict scope to phrases or clauses, neither over‑extending nor truncating the error range.
+- **specific_error_reason**: Concise statement of the defect, referencing relevant AEC‑Q requirements and describing practical impacts caused by non‑compliance.
+- **corrected_content**: Fully compliant ground‑truth text, identical to the correct answer in the source hard sample.
+
+### Step 4: Quality Check & Cross‑Review
+1. **Self‑inspection**: The author verifies error plausibility, annotation correctness and format compliance against original standard documents.
+2. **Cross‑validation**: A second peer‑level expert performs blind review to validate engineering rationality and annotation accuracy.
+3. **Dispute resolution**: In case of disagreement, two experts jointly reference standards and industrial cases to reach consensus. Discard samples that cannot achieve consensus.
+4. Reject non‑conforming samples for redesign until acceptance criteria are satisfied.
+
+### Step 5: Archiving & Output
+1. Export validated augmented samples into unified JSON format with identical field ordering as source samples.
+2. Name output file `agumented_hard_samples.json` and save to path: `../../data/train/Hard_samples/`.
+3. Record augmentation statistics: number of source hard samples, total generated variants, distribution of error types, number of discarded samples.
+4. Archive all intermediate documents under confidentiality rules; no private retention or external dissemination.
+
+## 6. Design Specifications for Four Core Error Types
+### 6.1 Clause‑Citation Error
+- **Scope**: Wrong standard series number, incorrect sub‑clause identifier, miswritten standard abbreviation, or mismatched clause‑to‑test‑item reference.
+- **Requirements**: Wrong identifiers shall be close to correct values simulating real‑world typographical mistakes; non‑existent standard numbers are forbidden.
+- **Example**: Write `AEC‑Q100‑002` instead of `AEC‑Q100‑001`; write `AEC‑Q004` instead of `AEC‑Q003`.
+
+### 6.2 Test‑Parameter Deviation
+- **Scope**: Deviations in sample quantity, temperature, Cpk threshold, voltage / current magnitude, or test duration.
+- **Requirements**: Deviation magnitude limited within 10%‑30%, targeting near‑boundary realistic pitfalls. Parameters shall obey physical constraints; negative values or zero values with no physical meaning are prohibited.
+- **Example**: Write “4 devices” instead of “at least 5 devices”; write `Cpk≥1.5` instead of `Cpk≥1.67`.
+
+### 6.3 Failure‑Criterion Misapplication
+- **Scope**: Reversed comparison operators, incorrect threshold values, inverted pass/fail conclusions, or misassigned pass‑fail criteria.
+- **Requirements**: Misapplication shall reflect plausible human misinterpretation; avoid violations contradicting basic common sense.
+- **Example**: Replace `≥` with `≤`; replace “meets the standard requirements” with “does not meet the standard requirements”.
+
+### 6.4 Cross‑Chapter Data Inconsistency
+- **Scope**: Conflicting numerical parameters across text segments, contradictory device/package descriptions, mismatched test conditions versus results, or conflicts between table content and main‑text statements.
+- **Requirements**: Conflicting pieces of information shall co‑exist within one text fragment; defects shall require full‑context reading for detection. Unrelated artificial contradictions are not allowed.
+- **Example**: “30 bond points” in one paragraph versus “25 bond points” elsewhere; “plastic packages” in one section versus “hermetic packages” in another section.
+
+## 7. Acceptance Criteria
+- Format compliance rate: **100%**. All fields complete and consistent with training‑set schema.
+- Engineering plausibility rate: **100%**. All injected errors conform to AEC‑Q and real‑world engineering logic.
+- Annotation accuracy: **≥98%**. Error position, error reason and corrected text are mutually consistent.
+- Cross‑review agreement rate: **≥95%**. Percentage of samples with consistent judgments from two independent experts.
+
+## 8. Notes
+1. Strictly enforce data‑confidentiality policies; no external leakage of enterprise proprietary test‑report data.
+2. Augmented samples shall not duplicate existing training‑set or test‑set entries to prevent data leakage.
+3. Prioritize variant generation for test items and clauses where the model frequently fails to achieve targeted optimization.
+4. Do not fabricate defects for scenarios lacking definitive standard references.
+5. Record ambiguities discovered during this work and feed back to the standards committee.

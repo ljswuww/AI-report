@@ -14,8 +14,9 @@ os.environ["CUDA_VISIBLE_DEVICES"] = "0,1,2"
 os.environ["HF_ENDPOINT"] = "https://hf-mirror.com"
 
 # -------------------------- Path Configuration --------------------------
-OUTPUT_DIR = "../model/output/4GRPO_content_output"
 MODEL_PATH = "../model/output/3GRPO_format_output"
+OUTPUT_DIR = "../model/output/4GRPO_content_output"
+data_path = "../../data/train/RL_data/GRPO_content/RL_content_samples.json"
 
 # -------------------------- Simplified Prompt --------------------------
 SYSTEM_PROMPT = """You are a professional expert in text error diagnosis and correction, with specialized expertise in the field of AEC-Q automotive-grade chip testing.
@@ -46,7 +47,6 @@ Text:  {Input_text}
 
 # -------------------------- Dataset Processing (Core Optimization: Label Validation + Shuffling + Validation Split) --------------------------
 def get_correction_dataset(split="train") -> (Dataset, Dataset):
-    data_path = "../../data/train/RL_data/GRPO_content/RL__content_samples.json"
     data = load_dataset('json', data_files=data_path)['train']
     print(data)
     data = data.map(lambda x: {
@@ -355,7 +355,7 @@ try:
     print("Training completed, saving model...")
 finally:
     file_path = "../../data/train/Hard_samples/hard_samples.txt"
-    separator = "*|||*"
+    separator = "*|||*\n"       
     save_set_to_txt(reward_manager.hard_sams_set, file_path, separator)
     reward_path = "./reward.txt"
     save_list_as_string_to_txt(reward_manager.reward_history, reward_path)

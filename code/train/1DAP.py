@@ -12,12 +12,12 @@ from transformers import (
 )
 
 # ==================== Global Configuration ====================
-# Output directory (path to save the fine-tuned model)
-OUTPUT_DIR = "../model/output/1DAP_output"
 # Local model directory
 local_model_dir = "../model/base/qwen2.5-14b-instruct"
+# Output directory (path to save the fine-tuned model)
+OUTPUT_DIR = "../model/output/1DAP_output"
 # Cache directory
-CACHE_DIR = "../model/base/cache"
+CACHE_DIR = "../model/base/dap_cache"
 os.makedirs(CACHE_DIR, exist_ok=True)
 
 # ==================== Function Definitions ====================
