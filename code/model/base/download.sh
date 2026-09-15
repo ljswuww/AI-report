@@ -1,11 +1,11 @@
 #!/bin/bash
-# download.sh - 下载 Qwen2.5-14B-Instruct (魔搭ModelScope，国内高速)
+# download.sh - Download Qwen2.5-14B-Instruct (ModelScope, fast in China)
 set -e
 
-# 升级modelscope，老版本cli会有bug
+# Upgrade modelscope; older CLI versions have bugs
 pip install -U modelscope
 
-# 下载，增加并发参数提升速度
+# Download, with concurrency parameters to improve speed
 modelscope download \
     --model Qwen/Qwen2.5-14B-Instruct \
     --local_dir ./qwen2.5-14b-instruct \
