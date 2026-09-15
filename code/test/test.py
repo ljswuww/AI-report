@@ -1,18 +1,5 @@
-# -*- coding: utf-8 -*-
 """
 ECA (Error-Correction Accuracy) evaluation for the AEC-Q test report auditing model.
-
-Paper Sec. III-D / IV-B: the ECA-evaluation judge deliberately uses a DIFFERENT backbone and a
-DIFFERENT prompt from the GRPO-training judge, so the policy cannot overfit one judge's output
-style. It scores all-or-nothing: 1.0 only when every pre-matched element agrees with the gold
-standard (Error Location -> Error Reason -> Corrected Text), otherwise 0.0.
-
-This script runs the isolated test set -- which never participates in training or iterative
-tuning -- generates one prediction per sample, extracts the four structured-CoT elements, and
-scores each against the gold annotation. Per-sample records (including the judge's raw reasoning)
-are written out so judge reliability can be checked against human expert labels.
-
-Run from the `code/test` directory.
 """
 
 import os
@@ -27,6 +14,7 @@ from transformers import AutoTokenizer, AutoModelForCausalLM
 from openai import OpenAI
 
 # ==================== Configuration ====================
+# Models from all stages can undergo ECA testing.
 # Model under evaluation. `final` is the converged artifact of the closed-loop iteration stage;
 # point this at `6Iteration_output/iter_N` or at an earlier stage for ablation runs.
 MODEL_PATH = "../model/output/6Iteration_output/final"
