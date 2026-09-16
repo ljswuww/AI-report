@@ -1,0 +1,17 @@
+AEC-Q Test Report Auditing Example of Our  Model
+Input_text:
+“ Grade 0. Test ambient temperature: Ta=125°C, test duration: 48 hours, supply voltage: VCC=65V; pre-stress/post-stress functional/electrical parameter tests 2400/0, test implementation conditions 2400/0, all passed.”
+
+Model_output:
+<reasoning>
+The known knowledge for Table 2 Test B2 specifies: Sample size: 800 per lot, 3 lots. Test before and after ELFR at room and hot temperature. 0 Fails. The input text states "pre-stress/post-stress functional/electrical parameter tests 2400/0, test implementation conditions 2400/0". According to the standard, the sample size should be 800 per lot × 3 lots = 2400 total, so "2400/0" is consistent with the total sample size and 0 failures. The known knowledge does not specify temperature or duration for B2, so no error can be identified for "Ta=125°C, test duration: 48 hours". No error is present based on the given known knowledge.
+</reasoning>
+<error_position>
+none
+</error_position>
+<specific_error_reason>
+none
+</specific_error_reason>
+<corrected_text>
+Grade 0. Test ambient temperature: Ta=125°C, test duration: 48 hours, supply voltage: VCC=65V; pre-stress/post-stress functional/electrical parameter tests 2400/0, test implementation conditions 2400/0, all passed.
+</corrected_text>

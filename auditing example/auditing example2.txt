@@ -1,0 +1,17 @@
+AEC-Q Test Report Auditing Example of Our  Model
+Input_text:
+“Grade 0. 150°C, 1000 hours (intermediate read point test at 500 hours); pre-stress/post-stress functional/electrical parameter tests 45/0, test implementation conditions 45/0, all passed.”
+
+Model_output:
+<reasoning>
+The known knowledge for Table 2 Test A6 specifies: Sample size 45 per lot, 1 lot. Plastic/Flip-Chip BGA: Grade 0: +175°C for 1000 hrs or +150°C for 2000 hrs. The input text states "Grade 0. 150°C, 1000 hours". According to the standard, Grade 0 at 150°C requires 2000 hours, not 1000 hours. Therefore, the duration is incorrect. The smallest complete error-containing clause is "150°C, 1000 hours". The cause is that Grade 0 at 150°C must be 2000 hours per the known standard. The rest (45/0 sample size, intermediate read point at 500 hours) appears consistent.
+</reasoning>
+<error_position>
+150°C, 1000 hours
+</error_position>
+<specific_error_reason>
+According to the known knowledge, Grade 0 at 150°C requires 2000 hours, but the text states 1000 hours.
+</specific_error_reason>
+<corrected_text>
+Grade 0. 150°C, 2000 hours (intermediate read point test at 500 hours); pre-stress/post-stress functional/electrical parameter tests 45/0, test implementation conditions 45/0, all passed.
+</corrected_text>

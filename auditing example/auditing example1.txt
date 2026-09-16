@@ -1,0 +1,17 @@
+AEC-Q Test Report Auditing Example of Our  Model
+Input_text:
+“Grade 0. Preprocessing of PC test samples; 2. -55°C to 150°C, 1,000 cycles, hold time 10 minutes (intermediate read point testing performed at 500 cycles); 3. Before and after the test, 3 samples were randomly selected from each batch for SAT (C-scan & T-scan); pre-stress/post-stress functional/electrical parameter testing 231/0, test implementation conditions 231/0, all passed.”
+
+Model_output:
+<reasoning>
+The provided known knowledge specifies the test standard for AEC-Q Test A4: Sample size is 77 per lot, 3 lots; PC before TC; Grade 0: -55°C to +150°C for 1500 cycles; Grade 1: -55°C to +150°C for 1000 cycles; 0 Fails. The input text describes a Grade 0 test with "-55°C to 150°C, 1,000 cycles" and "intermediate read point testing performed at 500 cycles". According to the known knowledge, Grade 0 requires 1500 cycles, not 1000 cycles. Therefore, the cycle count is incorrect for Grade 0. The smallest complete error-containing clause is "-55°C to 150°C, 1,000 cycles". The cause is that Grade 0 should be 1500 cycles per the standard.
+</reasoning>
+<error_position>
+-55°C to 150°C, 1,000 cycles
+</error_position>
+<specific_error_reason>
+According to the known knowledge, Grade 0 requires 1500 cycles, but the text states 1000 cycles.
+</specific_error_reason>
+<corrected_text>
+Grade 0. Preprocessing of PC test samples; 2. -55°C to 150°C, 1,500 cycles, hold time 10 minutes (intermediate read point testing performed at 500 cycles); 3. Before and after the test, 3 samples were randomly selected from each batch for SAT (C-scan & T-scan); pre-stress/post-stress functional/electrical parameter testing 231/0, test implementation conditions 231/0, all passed.
+</corrected_text>
